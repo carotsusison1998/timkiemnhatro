@@ -9,6 +9,8 @@
 		{{Session::get('thongbao')}}
 	</div>
 	@endif
+	<h2 class="text-center">Danh Sách Sản Phẩm</h2>
+	<div class="clearfix"><br></div>
 	<div class="clearfix"></div>
 	<a href="{{route('insert-boardinghouse')}}"style="color: white"><b><button class="btn btn-success">Thêm Nhà Trọ</button></b></a>
 	<table class="table table-responsive table-inverse">

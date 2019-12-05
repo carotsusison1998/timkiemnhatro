@@ -1,5 +1,5 @@
 <section>
-	<img src="../vacayhome/images/banner.png" alt="" style="border-radius: 90px" width="150px" height="150px"> <br> <br>
+	<img src="../resources/UploadImage/Image/{{$customer['image']}}" alt="" style="border-radius: 90px" width="150px" height="150px"> <br> <br>
 	<div class="clearfix"></div>
 	
 	<div class="row" style="margin-left: 9px; font-size: 20px">

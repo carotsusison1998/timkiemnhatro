@@ -3,19 +3,19 @@
 <section class="contact-block">
 	<div class="container">
 		<div class="col-md-6 contact-left-block">
-			<h3><span>Contact </span>Us</h3>
-			<p class="text-left">Nulla pharetra eleifend tellus in molestie. In vel neque sit amet urna gravida blandit nec id massa. Phasellus eu aliquet augue. Quisque fringilla urna quam.</p>
-			<p class="text-right">701 Old York Drive Richmond USA. <i class="fa fa-map-marker fa-lg"></i></p>
-			<p class="text-right"><a href="tel:+1-202-555-0100"> +1-202-555-0100 <i class="fa fa-phone fa-lg"></i></a></p>
-			<p class="text-right"><a href="mailto:demo@info.com"> demo@info.com <i class="fa fa-envelope"></i></a></p>
+			<h3><span>Liên hệ website</span> Vacayhome</h3>
+			<p class="text-left">Trường Đại học Kỹ thuật – Công nghệ Cần Thơ.</p>
+			<p class="text-right">256 Nguyễn Văn Cừ, Quận Ninh Kiều, Thành phố Cần Thơ. <i class="fa fa-map-marker fa-lg"></i></p>
+			<p class="text-right"><a href="tel:+1-202-555-0100"> (+84) 58-277-4228 <i class="fa fa-phone fa-lg"></i></a></p>
+			<p class="text-right"><a href="mailto:demo@info.com"> tnduy.16.06.1998@gmail.com <i class="fa fa-envelope"></i></a></p>
 		</div>
 		<div class="col-md-6 contact-form">
-			<h3>Send a <span>Message</span></h3>
+			<h3>Gửi Thông tin về <span>Vacayhome</span></h3>
 			<form action="#" method="post">
-				<input type="text" class="form-control" name="Name" placeholder="Name" required="">
+				<input type="text" class="form-control" name="Name" placeholder="Tên" required="">
 				<input type="email" class="form-control" name="Email" placeholder="Email" required="">
-				<textarea class="form-control" name="Message" placeholder="Message Here...." required=""></textarea>
-				<input type="submit" class="submit-btn" value="Submit">
+				<textarea class="form-control" name="Message" placeholder="Nội dung...." required=""></textarea>
+				<input type="submit" class="submit-btn" value="Gửi" disabled="">
 			</form>
 		</div>
 		<div class="clearfix"></div>
@@ -26,8 +26,42 @@
 <section class="offspace-70">
 	<div class="map">
 		<div class="container">
-			<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d101257.12284776446!2d-77.56330202084071!3d37.52477641775529!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89b111095799c9ed%3A0xbfd83e6de2423cc5!2sRichmond%2C+VA%2C+USA!5e0!3m2!1sen!2sin!4v1488891294599"  frameborder="0" style="border:0; width: 100%; height: 400px" allowfullscreen></iframe>
+			<section class="offspace-70">
+				<div class="map">
+					<div class="container">
+						<div id="sethPhatMap" class="map" style="border:0; width: 100%; height: 400px" allowfullscreen></div>
+					</div>
+				</div>
+			</section>
 		</div>
 	</div>
 </section>
 @endsection
+<script type="text/javascript">
+	var mapObj = null;
+    var defaultCoord = [10.045162, 105.746857]; // coord mặc định, 9 giữa Can tho
+    var zoomLevel = 10;
+    var mapConfig = {
+        attributionControl: false, // để ko hiện watermark nữa
+        center: defaultCoord, // vị trí map mặc định hiện tại
+        zoom: zoomLevel, // level zoom
+    };
+    
+    window.onload = function() {
+        // init map
+        mapObj = L.map('sethPhatMap', {attributionControl: false}).setView(defaultCoord, zoomLevel);
+        
+        // add tile để map có thể hoạt động, xài free từ OSM
+        L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+        	attribution: '© <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(mapObj);
+        // var marker = L.marker([10.04687 ,105.76810]).addTo(mapObj);
+        var marker = L.marker([10.04681 ,105.76807]).addTo(mapObj);
+        // var marker = L.marker([$a ,$b]).addTo(mapObj);
+        
+        // tạo popup và gán vào marker vừa tạo
+        var popup = L.popup();
+        popup.setContent("Vị trí website vacayhome ");
+        marker.bindPopup(popup);
+    };
+</script>

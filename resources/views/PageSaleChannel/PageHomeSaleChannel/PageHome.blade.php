@@ -2,7 +2,6 @@
 @extends('PageSaleChannel.master')
 @section('content')
 <section>
-	Page Home <br>
-	Thanks you for used us service 
+	<h2>Thanks you for used us service</h2> 
 </section>
 @endsection

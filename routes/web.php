@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Area;
 use App\Type_BoardingHouse;
+
 Route::get('', [
 	'as'=>'page-home',
 	'uses' =>'PageControllerHome@GetHome'
@@ -253,5 +254,13 @@ Route::group(['prefix'=>''],function(){
 	Route::post('sign-in-channel', [
 		'as'=>'sign-in-channel',
 		'uses' =>'PageControllerUser@PostSigninChannel'
+	]);
+	Route::get('change-information/{id}', [
+		'as' => 'change-information',
+		'uses' => 'PageControllerUser@GetChange'
+	]);
+	Route::post('change-information', [
+		'as' => 'change-informations',
+		'uses' => 'PageControllerUser@PostChange'
 	]);
 });

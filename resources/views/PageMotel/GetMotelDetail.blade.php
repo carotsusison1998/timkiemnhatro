@@ -82,7 +82,7 @@
 			<div class="col-md-7 about-right">
 				<h3><a>Nhà Trọ {{$boardinghouse['name']}}</a></h3>
 				<ul class="list-unstyled list-inline">
-					<li style="background-color: #ff4157; border-radius: 30px; padding: 5px">
+					<li style="background-color: #ff4157; border-radius: 30px; padding: 5px;">
 						<b>Giá Thuê: {{number_format($boardinghouse['price'])}} Vnd</b>
 					</li> <br>
 					<li><i class="fa fa-map-marker"></i> Địa Chỉ: {!!$boardinghouse['address']!!}</li> <br>	
@@ -241,7 +241,13 @@
 			</div>
 		</div>
 	</div>
-	<div id="sethPhatMap" class="map" style="width: 60%; height: 400px; margin-left: 22%; margin-top: 50px;"></div>
+	<section class="offspace-70">
+		<div class="map">
+			<div class="container">
+				<div id="sethPhatMap" class="map" style="border:0; width: 100%; height: 400px" allowfullscreen></div>
+			</div>
+		</div>
+	</section>
 </section>
 @endsection
 

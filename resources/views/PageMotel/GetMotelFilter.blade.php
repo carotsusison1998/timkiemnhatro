@@ -21,7 +21,7 @@
 						<li><a href="{{route('motel-filter', 'price=1')}}"><i class="fa fa-caret-right"> </i>Nhà Trọ Trên 2 Triệu</a></li>
 						<li><a href="{{route('motel-filter', 'price=2')}}"><i class="fa fa-caret-right"> </i>Nhà Trọ 1 Triệu Đến 2 Triệu</a></li>
 						<li><a href="{{route('motel-filter', 'price=3')}}"><i class="fa fa-caret-right"> </i>Nhà Trọ Dưới 1 Triệu</a></li>
-						<li><a href="{{route('motel-filter', 'price=4')}}"><i class="fa fa-caret-right"> </i>Nhà Trọ Dưới 800 Triệu</a></li>
+						<li><a href="{{route('motel-filter', 'price=4')}}"><i class="fa fa-caret-right"> </i>Nhà Trọ Dưới 800.000</a></li>
 					</ul>
 				</div>
 				<div class="blog-list1">
@@ -81,6 +81,7 @@
 			</aside>
 			<div class="col-md-9 col-sm-12 col-xs-12">
 				@if(count($boardinghouse) > 0)
+				<h3 class="text-center" style="text-transform: uppercase;">{{$price}}</h3>
 				@foreach($boardinghouse as $value)
 				<div class="col-md-9 col-sm-12 col-xs-12 remove-padd-left" style="padding-top: 20px">
 					<div class="side-A">
@@ -95,7 +96,7 @@
 					<div class="side-B">
 						<div class="product-desc-side">
 							<h3><a href="{{url('motel-detail', $value['id'])}}">Nhà Trọ: {{$value['name']}}</a></h3> <br>
-							<h4><p style="background-color: #ff4157; border-radius: 30px; padding: 5px">
+							<h4><p style="background-color: #ff4157; border-radius: 30px; padding: 5px; margin-top: 5px;">
 								Giá Phòng: <b>{{number_format($value['price'])}} Vnd
 								</p>
 							</h4> <br>  
@@ -118,6 +119,7 @@
 				<div class="clear"></div>
 				@endforeach
 				@else
+				<h3 class="text-center" style="text-transform: uppercase;">{{$price}}</h3>
 				<div class="alert alert-success">
 					chưa có nhà trọ bạn muốn
 				</div>

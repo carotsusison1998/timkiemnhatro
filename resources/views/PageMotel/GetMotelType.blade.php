@@ -80,7 +80,7 @@
 				</div>
 			</aside>
 			<div class="col-md-9 col-sm-12 col-xs-12">
-				<h1 class="text-center"><b>{{$nametype_boardinghouse->name}}</b></h1>
+				<h3 class="text-center" style="text-transform: uppercase;">{{$nametype_boardinghouse->name}}</h3>
 				@if(count($boarding) != 0)
 				@foreach($boarding as $value)
 				<div class="col-md-9 col-sm-12 col-xs-12 remove-padd-left" style="padding-top: 20px">
@@ -96,7 +96,7 @@
 					<div class="side-B">
 						<div class="product-desc-side">
 							<h3><a href="{{url('motel-detail', $value['id'])}}">Nhà Trọ: {{$value['name']}}</a></h3> <br>
-							<h4><p style="background-color: #ff4157; border-radius: 30px; padding: 5px">
+							<h4><p style="background-color: #ff4157; border-radius: 30px; padding: 5px; margin-top: 5px;">
 								Giá Phòng: <b>{{number_format($value['price'])}} Vnd
 								</p>
 							</h4> <br>  

@@ -54,15 +54,19 @@ class PageControllerHome extends Controller
             switch ($price) {
                case '1':
                $boardinghouse = BoardingHouse::where('price', '>', '2000000')->orderBy('created_at', 'desc')->get();
+               $price = "Loại trọ trên 2 triệu";
                break;
                case '2':
                $boardinghouse = BoardingHouse::whereBetween('price', [1000000, 2000000])->orderBy('created_at', 'desc')->get();
+               $price = "Loại trọ từ 1 triệu đến 2 triệu";
                break;
                case '3':
                $boardinghouse = BoardingHouse::whereBetween('price', [800000, 1000000])->orderBy('created_at', 'desc')->get();
+               $price = "Loại trọ dưới 1 triệu";
                break;
                case '4':
                $boardinghouse = BoardingHouse::where('price', '<', '800000')->orderBy('created_at', 'desc')->get();
+               $price = "Loại trọ dưới 800.000 ngàn";
                break;
 
                default:
@@ -70,7 +74,7 @@ class PageControllerHome extends Controller
                break;
            }
        }
-        return view('PageMotel.GetMotelFilter', compact('boardinghouse', 'type_boardinghouse'));
+        return view('PageMotel.GetMotelFilter', compact('boardinghouse', 'type_boardinghouse', 'price'));
 
    }
 

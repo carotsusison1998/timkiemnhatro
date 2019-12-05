@@ -78,8 +78,12 @@
                                             <button type="button" class="btn btn-success">Phòng Đã Đặt
                                             </button>
                                         </a>
-                                        <a class="dropdown-item" href="{{route('sales-channel',$customer['id'])}}">
+                                        <a class="dropdown-item" href="{{route('sales-channel', $customer['id'])}}">
                                             <button type="button" class="btn btn-success">Kênh Bán Hàng
+                                            </button>
+                                        </a>
+                                        <a class="dropdown-item" href="{{route('change-information', $customer['id'])}}">
+                                            <button type="button" class="btn btn-success">Đổi Thông Tin
                                             </button>
                                         </a>
                                     </li>
@@ -92,6 +96,10 @@
                                         <a  class="dropdown-item">
                                         <button type="button" class="btn btn-success" data-toggle="modal" data-target="#mysModal">Đăng Kí Kênh Bán Hàng
                                         </button>
+                                        </a>
+                                        <a class="dropdown-item" href="{{route('change-information', $customer['id'])}}">
+                                            <button type="button" class="btn btn-success">Đổi Thông Tin
+                                            </button>
                                         </a>
                                     </li>
                                     @endif
@@ -248,3 +256,4 @@
     };
 
 </script> -->
+
