@@ -20,7 +20,7 @@
 
 			<h3><span>Thông Tin </span> Khách Hàng</h3>
 			<p class="text-left">Họ Và Tên: <span style="color: #ff4157">{{$customer->first_name}} {{$customer->last_name}}</span></p>
-			<p class="text-left">Số Điện Thoại: </p>
+			<p class="text-left">Số Điện Thoại: {{$customer->phone}}</p>
 			<p class="text-left">Địa Chỉ: {{$customer->address}}</p>
 		</div>
 		<div class="col-md-6 contact-form">

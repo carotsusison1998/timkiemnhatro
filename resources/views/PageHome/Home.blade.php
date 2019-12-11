@@ -69,7 +69,7 @@
                     <img class="img-responsive" src="./vacayhome/images/anh1.jpg">
                     <div class="overlay">
                         <a class="info pop example-image-link img-responsive" href="./vacayhome/images/room1.png" data-lightbox="example-1"><i class="fa fa-search" aria-hidden="true"></i></a>
-                        <p><a>Nhà Trọ</a></p>
+                        <p><a href="http://localhost:8080/Laravel/timkiemphongtro/public/motel-all">Nhà Trọ</a></p>
                     </div>
                 </div>
             </div>
@@ -80,7 +80,7 @@
                     <img class="img-responsive" src="./vacayhome/images/anh2.jpg">
                     <div class="overlay">
                         <a class="info pop example-image-link img-responsive" href="./vacayhome/images/room2.png" data-lightbox="example-1"><i class="fa fa-search" aria-hidden="true"></i></a>
-                        <p><a>Khách Sạn</a></p>
+                        <p><a href="http://localhost:8080/Laravel/timkiemphongtro/public/motel-type/4">Khách Sạn</a></p>
                     </div>
                 </div>
             </div>

@@ -124,7 +124,6 @@ class PageControllerUser extends Controller
                 'first_name' => 'required',
                 'last_name' => 'required',
                 'phone' => 'required|numeric',
-                'address' => 'required|min:10',
                 'image' => 'mimes:jpeg,png,jpg',
             ],
             [

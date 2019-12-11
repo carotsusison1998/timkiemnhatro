@@ -82,6 +82,10 @@
                                             <button type="button" class="btn btn-success">Kênh Bán Hàng
                                             </button>
                                         </a>
+                                        <a class="dropdown-item" href="{{route('change-information', $customer['id'])}}">
+                                            <button type="button" class="btn btn-success">Đổi Thông Tin
+                                            </button>
+                                        </a>
                                     </li>
                                     @else
                                     <li>
@@ -92,6 +96,10 @@
                                         <a  class="dropdown-item">
                                         <button type="button" class="btn btn-success" data-toggle="modal" data-target="#mysModal">Đăng Kí Kênh Bán Hàng
                                         </button>
+                                        </a>
+                                        <a class="dropdown-item" href="{{route('change-information', $customer['id'])}}">
+                                            <button type="button" class="btn btn-success">Đổi Thông Tin
+                                            </button>
                                         </a>
                                     </li>
                                     @endif
@@ -105,7 +113,7 @@
                                 </ul>
                                 @else
                                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"  style="background-color: #ff4157; color: white">
-                                    <span>Chào Mừng Bạn Đến Vacayhome</span>
+                                    <span>Xin chào</span>
                                 </button> 
                                 @endif
                             </div>
