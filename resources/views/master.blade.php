@@ -15,6 +15,7 @@ License URI: http://www.themevault.net/license/-->
 
     <!-- Bootstrap core CSS -->
     <link href="./vacayhome/css/bootstrap.min.css" rel="stylesheet">
+    <link href="./vacayhome/swiper.min.css" rel="stylesheet">
     <link href="./vacayhome/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
     <!-- Custom styles for this template -->
     <link href="./vacayhome/css/style.css" rel="stylesheet">
@@ -26,12 +27,13 @@ License URI: http://www.themevault.net/license/-->
     <script src="./vacayhome/js/lightbox-plus-jquery.min.js" type="text/javascript"></script>
     <script src="./vacayhome/js/instafeed.min.js" type="text/javascript"></script>
     <script src="./vacayhome/js/custom.js" type="text/javascript"></script>
-
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css" integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA==" crossorigin=""/>
     <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js" integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg==" crossorigin=""></script>
+    <script src="./vacayhome/swiper.min.js"></script>
     <style>
         body{
-    background-color: #f1f1f1;
+            background-color: #f1f1f1;
             
         }
     </style>
@@ -62,6 +64,6 @@ License URI: http://www.themevault.net/license/-->
 
 
 
-    
+
 
 

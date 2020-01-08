@@ -79,9 +79,14 @@
 					</div>
 				</div>
 			</aside>
-			<div class="col-md-9 col-sm-12 col-xs-12">
+			<div class="col-md-9 col-sm-12 col-xs-12" style=" padding-top: 10px">
+				<input type="text" class="form-control" style="border-radius: 10px; height: 40px;" id="search" placeholder="Tìm kiếm......">
+			</div>
+			<div class="col-md-9 col-sm-12 col-xs-12" id="show">
+
+				
 				@foreach($all as $value)
-				<div class="col-md-9 col-sm-12 col-xs-12 remove-padd-left" style="padding-top: 20px">
+				<div class="col-md-9 col-sm-12 col-xs-12 remove-padd-left" style="padding-top: 20px" >
 					<div class="side-A">
 						<div class="product-thumb">
 							<div  class="img-responsive" style="">
@@ -125,4 +130,57 @@
 	</div>
 </section>
 <!--end-->
+
+<script>
+	$(document).ready(function(){
+
+		$("#search").on('keyup', function(){
+			var key = $(this).val();
+			
+			$.ajax({
+				url: '{{route('search-motel')}}',
+				type: 'get',
+				data: {'search': key},
+				success: function(data){
+					$('#show').html(data);
+					console.log(data)
+				}
+			});
+		});
+
+	});
+</script>
 @endsection
+<!-- 
+'<div class="col-md-9 col-sm-12 col-xs-12 remove-padd-left" style="padding-top: 20px">'.
+                                    '<div class="side-A">'
+                                        '<div class="product-thumb">'
+                                            '<div  class="img-responsive" style="">'
+                                                '<a href="{{url('motel-detail', $value['id'])}}">'
+                                                '<img src="./resources/UploadImage/ImageBoardingHouse/BoardingAvatar/{{$value['image']}}"  alt="image" class="img-rounded" width="300px" height="300px">'
+                                                '</a>'
+                                            '</div>'
+                                        '</div>'
+                                    '</div>'
+                                    '<div class="side-B">'
+                                    '<div class="product-desc-side">'
+                                        '<h3><a href="{{url('motel-detail', $value['id'])}}">Nhà Trọ: {{$value['name']}}</a></h3> <br>'
+                                        '<h4><p style="background-color: #ff4157; border-radius: 30px; padding: 5px">
+                                            Giá Phòng: <b>{{number_format($value['price'])}} Vnd
+                                            </p>'
+                                        '</h4> <br>'
+                                        '<p><li>Diện Tích: {{$value['acreage']}} m2</li></p>'
+                                        '<p><b><li>Địa Chỉ: {{$value['address']}}</li></b></p>'
+                                        '<p><b><li>'
+                                            '<?php' 
+                                            '$date = date_create($value['created_at']);'
+                                            '$d = date_format($date, 'd-m-Y');'
+                                            '$c = date_format($date, 'H:i');'
+                                            '?>'
+                                            'Thời Gian Đăng: <br> Lúc {{$c}} Ngày {{$d}}'
+                                        '</li></b></p> <br>'
+                                        '<div class="links">'
+                                            '<a href="{{url('motel-detail', $value['id'])}}" style="border-radius: 30px">Chi Tiết</a>'
+                                        '</div>'
+                                    '</div>'
+                                '</div>' -->

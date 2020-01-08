@@ -83,7 +83,7 @@
 				<h3><a>Nhà Trọ {{$boardinghouse['name']}}</a></h3>
 				<ul class="list-unstyled list-inline">
 					<li style="background-color: #ff4157; border-radius: 30px; padding: 5px;">
-						<b>Giá Thuê: {{number_format($boardinghouse['price'])}} Vnd</b>
+						<b>Giá Thuê: {{$boardinghouse['price']}} Vnd</b>
 					</li> <br>
 					<li><i class="fa fa-map-marker"></i> Địa Chỉ: {!!$boardinghouse['address']!!}</li> <br>	
 					<li>
@@ -101,11 +101,11 @@
 					</li> <br>
 					<li>
 						<?php 
-						$area = DB::table('Area')->where('id', $boardinghouse['id_area'])->first();
+						$area = DB::table('street')->where('id', $boardinghouse['id_street'])->first();
 						?>
 						<i class="fa fa-location-arrow"></i> Khu Vực: {{$area->name}}
 					</li> <br>
-					<li><i class="fa fa-anchor"></i> Diện Tích: {{$boardinghouse['acreage']}}m2</li> <br> <br>
+					<li><i class="fa fa-anchor"></i> Diện Tích: {{$boardinghouse['acreage']}}</li> <br> <br>
 					<b>
 						@if($boardinghouse['status'] != 1)
 						<button class="btn btn-success" disabled="">
@@ -120,8 +120,7 @@
 				</ul>
 				<ul>
 					<span>Mô Tả Chi Tiết:</span> <br>
-					<textarea name="" id="text" style="max-width: 100%; min-width: 100%; min-height: 100%; min-height:200px;">
-						{{$boardinghouse->description}}
+					<textarea name="" id="text"  rows="15" style="max-width: 100%; min-width: 100%; min-height: 100%; min-height:200px;">{{$boardinghouse->description}}
 					</textarea>
 				</ul>
 			</div>
@@ -248,6 +247,61 @@
 			</div>
 		</div>
 	</section>
+
+	<!----resort-overview--->
+	<section class="resort-overview-block">
+		<div class="container">
+			<h3> Nhà Trọ Cung Chu</h3>
+			<div class="row">
+				@foreach($motelofid as $value)
+				<div class="col-md-6 col-sm-12 col-xs-12 remove-padd-right" style="padding-top: 20px">
+					<div class="side-A">
+						<div class="product-thumb">
+							<div  class="img-responsive" style="">
+								<a href="{{url('motel-detail', $value->id)}}">
+									<img src="../resources/UploadImage/ImageBoardingHouse/BoardingAvatar/{{$value->image}}"  alt="image" class="img-rounded" width="300px" height="300px">
+								</a>
+							</div>
+						</div>
+					</div>
+					<div class="side-B">
+						<div class="product-desc-side">
+							<h3><a href="{{url('motel-detail', $value->id)}}">Nhà Trọ: {{$value->name}}</a></h3> <br>
+							<h4><p style="background-color: #ff4157; border-radius: 30px; padding: 5px; margin-top: 5px;">
+								Giá Phòng: {{$value->price}}<b> Vnd
+								</p>
+							</h4> <br>  
+							<p><li>Diện Tích: {{$value->acreage}}</li></p>
+							<p><b><li>Địa Chỉ: {{$value->address}}</li></b></p>
+							<p><b><li>
+								<?php 
+	                            $date = date_create($value->created_at);
+	                            $d = date_format($date, 'd-m-Y');
+	                            $c = date_format($date, 'H:i');
+	                            ?>
+	                            Thời Gian Đăng: <br> Lúc {{$c}} Ngày {{$d}}
+							</li></b></p> <br>
+							<!-- <div class="links">
+								<a href="" style="border-radius: 30px">Chi Tiết</a>
+								@if($value->status != 1)
+								<button class="btn btn-success" disabled=""  style="border-radius: 30px; background-color: #2FF95A">
+									<b title="phòng đã được đặt bởi người khác">Hết Phòng</b>
+								</button>
+								@elseif($value->status == 1)
+								<a href="route('order-boardinghouse', $value['id'])" style="border-radius: 30px; background-color: #2FF95A">Đặt Phòng</a>
+								@endif
+							</div> -->
+						</div>
+					</div>
+				</div>
+				<div class="clear"></div>
+				@endforeach
+			</div>
+		</div>
+	</section>
+	<!-- end -->
+
+	
 </section>
 @endsection
 
@@ -274,7 +328,7 @@
         }).addTo(mapObj);
         // var marker = L.marker([10.04687 ,105.76810]).addTo(mapObj);
         // var marker = L.marker([10.04607 ,105.76908]).addTo(mapObj);
-        var marker = L.marker([$a ,$b]).addTo(mapObj);
+        var marker = L.marker([$b ,$a]).addTo(mapObj);
         
         // tạo popup và gán vào marker vừa tạo
         var popup = L.popup();

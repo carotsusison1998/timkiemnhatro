@@ -8,17 +8,21 @@ use App\Image_BoardingHouse;
 use App\Type_BoardingHouse;
 use App\Comment_BoardingHouse;
 use App\Rep_Comment_BoardingHouse;
+use App\Booking_Detail;
 use App\Customer;
 use Cart;
 use Auth;
-use Session;
+use Session,DB;
 class PageControllerHome extends Controller
 {
     //
     public function GetHome()
     {
         $boardinghouse = BoardingHouse::orderBy('created_at', 'desc')->paginate(4);
-        return view('PageHome.Home', compact('boardinghouse'));
+        $top = Booking_Detail::select('id_boardinghouse')->get()->take(8);
+
+
+        return view('PageHome.Home', compact('boardinghouse', 'top'));
     }
 
     public function GetMotelDetail($id, Request $req)
@@ -26,8 +30,21 @@ class PageControllerHome extends Controller
         $boardinghouse = BoardingHouse::where('id', $id)->first();
         $image = Image_BoardingHouse::where('id_boardinghouse', $id)->get();
         $comment = Comment_BoardingHouse::where('id_boardinghouse', $id)->get();
+        // 
+        $user = Auth::check();
+        $ids = Auth::user()['id'];
+        $customer = Customer::where('id_user',$ids)->first();
+        $motelofid = DB::table('boarding_house')->where([
+            ['id_owner', '=', $customer['id']],
+            ['id', '<>', $id],
+        ])->get();
+        // echo "<pre>";
+        // print_r($motelofid);
+        // echo "</pre>";
+
+        // 
         
-        return view('PageMotel.GetMotelDetail', compact('boardinghouse', 'image', 'comment'));
+        return view('PageMotel.GetMotelDetail', compact('boardinghouse', 'image', 'comment', 'motelofid'));
     }
 
     public function GetMotelType($id)
@@ -131,4 +148,17 @@ class PageControllerHome extends Controller
     {
         echo "string";
     }
+
+    public function AllBoardingClient($id)
+    {
+        $allboarding = BoardingHouse::where('id_owner', $id)->Orderby('created_at' , 'DESC')->paginate(4);
+        $allboarding2 = BoardingHouse::where('id_owner', $id)->where('status', 1)->Orderby('created_at' , 'DESC')->get();
+        $owner = Customer::where('id', $id)->first();
+        $arg = count($allboarding) - count($allboarding2);
+        // echo "<pre>";
+        // print_r(count($allboarding2));
+        // echo "</pre>";
+        return view('AllBoarding.allboarding', compact('allboarding', 'owner', 'allboarding2', 'arg'));
+    }
+
 }

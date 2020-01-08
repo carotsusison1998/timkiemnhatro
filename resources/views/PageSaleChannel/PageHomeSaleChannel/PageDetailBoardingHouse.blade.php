@@ -21,7 +21,7 @@
 		<fieldset class="form-group">
 			<label for="exampleInputPassword1">Khu Vực</label>
 			<?php 
-			$data = DB::table('Area')->where('id',$detail_boarding['id_area'])->first();
+			$data = DB::table('street')->where('id',$detail_boarding['id_street'])->first();
 			?>
 			<input type="text" class="form-control" id="exampleInputPassword1" disabled="" value="{{$data->name}}" placeholder="giá nhà trọ" name="price">
 		</fieldset>

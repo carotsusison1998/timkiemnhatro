@@ -15,6 +15,9 @@ use App\Customer;
 use App\Booking;
 use App\Booking_Detail;
 use App\Product;
+use App\street;
+use App\wards;
+use App\district;
 use Auth;
 use Input;
 use Imagick;
@@ -40,44 +43,53 @@ class PageControllerSalesChannel extends Controller
         $this->validate($req, 
             [
                 'name' => 'required',
-                'price' => 'required|numeric',
+                'price' => 'required',
                 'address' => 'required',
                 'description' => 'required|min:20',
                 'image' => 'required|mimes:jpeg,png,jpg',
+                'picture' => 'required',
+                'street' =>'required',
+                'number' => 'required',
+                'acreage' => 'required'
             ],
             [
                 'name.required' => 'vui lòng nhập tên nhà trọ',
                 'price.required' => 'vui lòng nhập giá nhà trọ',
-                'price.numeric' => 'vui lòng nhập số',
                 'address.required' => 'vui lòng nhập địa chỉ nhà trọ',
                 'description.required' => 'vui lòng nhập mô tả nhà trọ',
                 'description.min' => 'vui lòng nhập mô tả nhà trọ nhiều hơn 20 kí tự',
                 'image.required' => 'vui lòng nhập ảnh đại diện nhà trọ',
                 'image.mimes' =>'tệp ảnh nền bạn chọn không đúng định dạng là ảnh',
                 'picture.required' => 'vui lòng nhập ảnh chi tiết về nhà trọ',
+                'street.required' => ' vui lòng nhập đường',
+                'number.required' => 'vui lòng nhập số nhà',
+                'acreage.required' => 'vui lòng nhập diện tích'
             ]
         );
         $files = $req->file('image');
-        $image = $req->image;
         $filename =  $files->getClientOriginalName();     
         $id    = Auth::user()['id'];
         $id_customer = Customer::where('id_user', $id)->first();
         $boardinghouse = new BoardingHouse();
         $boardinghouse->name = $req->name;
         $boardinghouse->price = $req->price;
-        $boardinghouse->status = $req->status;
-        $boardinghouse->image = time().'.'.$image->getClientOriginalName();
+        $boardinghouse->status = '1';
+        $boardinghouse->image = time().'.'.$filename;
         $boardinghouse->description = $req->description;
         $boardinghouse->id_type_boardinghouse = $req->type_boardinghouse;
         $boardinghouse->id_owner = $id_customer->id;
-        $boardinghouse->id_area = $req->area;
+        $boardinghouse->id_street = $req->street;
         $boardinghouse->address = $req->address;
         $boardinghouse->acreage = $req->acreage;
         $boardinghouse->type = $req->type;
+        $boardinghouse->object = $req->object;
+        $boardinghouse->number = $req->number;
         $boardinghouse->lat = $req->lat;
         $boardinghouse->lng = $req->lon;
-        $image->move(public_path('resources/UploadImage/ImageBoardingHouse/BoardingAvatar'), time().'.'.$filename);
+        
         $boardinghouse->save();
+        $files->move(public_path('resources/UploadImage/ImageBoardingHouse/BoardingAvatar'), time().'.'.$filename);
+        
         // kiểm tra file ảnh chi tiết nè
         if($req->hasFile('picture'))
         {
@@ -86,6 +98,9 @@ class PageControllerSalesChannel extends Controller
                 if(isset($file))
                 {
                     $image_detail->image = time().'.'.$file->getClientOriginalName();
+                    // echo "<pre>";
+                    // print_r($image_detail->toArray());
+                    // echo "</pre>";
                     $image_detail->id_boardinghouse = $boardinghouse->id;
                     $file->move('resources/UploadImage/ImageBoardingHouse/BoardingDetail/', time().'.'.$file->getClientOriginalName());
                     $image_detail->save();
@@ -98,6 +113,9 @@ class PageControllerSalesChannel extends Controller
     public function HRMBoardingHouse($id)
     {
         $boardinghouse = BoardingHouse::where('id_owner', $id)->get()->toArray();
+        // echo "<pre>";
+        // print_r($boardinghouse);
+        // echo "</pre>";
         return view('PageSaleChannel.PageHomeSaleChannel.PageHRMBoardingHouse', compact('boardinghouse'));
     }
 
@@ -173,7 +191,7 @@ class PageControllerSalesChannel extends Controller
         $detail_boarding = BoardingHouse::where('id', $id)->first();
         $type_boardinghouse = Type_BoardingHouse::get();
         $area = Area::get();
-
+        
         return view('PageSaleChannel.PageHomeSaleChannel.PageUpdateBoardingHouse', compact('detail_boarding', 'type_boardinghouse', 'area'));
     }
 
@@ -182,63 +200,148 @@ class PageControllerSalesChannel extends Controller
         $this->validate($req, 
             [
                 'name' => 'required',
-                'price' => 'required|numeric',
+                'price' => 'required',
                 'address' => 'required',
                 'description' => 'required|min:20',
+                'image' => 'mimes:jpeg,png,jpg',    
+                'number' => 'required',
+                'acreage' => 'required'
             ],
             [
                 'name.required' => 'vui lòng nhập tên nhà trọ',
                 'price.required' => 'vui lòng nhập giá nhà trọ',
-                'price.numeric' => 'vui lòng nhập số',
                 'address.required' => 'vui lòng nhập địa chỉ nhà trọ',
                 'description.required' => 'vui lòng nhập mô tả nhà trọ',
                 'description.min' => 'vui lòng nhập mô tả nhà trọ nhiều hơn 20 kí tự',
+                'image.mimes' =>'tệp ảnh nền bạn chọn không đúng định dạng là ảnh',
+                'number.required' => 'vui lòng nhập số nhà',
+                'acreage.required' => 'vui lòng nhập diện tích'
             ]
         );
 
         $id = $req->id;
         $update_boardinghouse = BoardingHouse::find($id);
-        
-        if($req->hasFile('picture'))
+
+        if(!$req->street)
         {
-            $update_boardinghouse->name = $req->name;
-            $update_boardinghouse->price = $req->price;
-            $update_boardinghouse->status = $req->status;
-            $update_boardinghouse->description = $req->description;
-            $update_boardinghouse->id_type_boardinghouse = $req->id_type_boardinghouse;
-            $update_boardinghouse->id_area = $req->area;
-            $update_boardinghouse->address = $req->address;
-            $update_boardinghouse->acreage = $req->acreage;
-            $update_boardinghouse->type = $req->type;
-            $update_boardinghouse->lng = $req->y;
-            $update_boardinghouse->lat = $req->x;
-            foreach ($req->file('picture') as $file) {                
-                $image_detail = new Image_BoardingHouse();
-                if(isset($file))
-                {
-                    $image_detail->image = time().'.'.$file->getClientOriginalName();
-                    $image_detail->id_boardinghouse = $id;
-                    $file->move('resources/UploadImage/ImageBoardingHouse/BoardingDetail/', time().'.'.$file->getClientOriginalName());
-                    $image_detail->save();
+            if($req->hasFile('picture'))
+            {
+                $update_boardinghouse->name = $req->name;
+                $update_boardinghouse->price = $req->price;
+                $update_boardinghouse->status = $req->status;
+                $update_boardinghouse->description = $req->description;
+                $update_boardinghouse->id_type_boardinghouse = $req->id_type_boardinghouse;
+                $update_boardinghouse->id_street = $req->nostreet;
+                $update_boardinghouse->address = $req->address;
+                $update_boardinghouse->number = $req->number;
+                $update_boardinghouse->acreage = $req->acreage;
+                $update_boardinghouse->type = $req->type;
+                $update_boardinghouse->lng = $req->lng;
+                $update_boardinghouse->lat = $req->lat;
+                $update_boardinghouse->object = $req->object;
+
+                // echo "<pre>";
+                // print_r($update_boardinghouse->toArray());
+                // echo "</pre>";
+
+                foreach ($req->file('picture') as $file) {                
+                    $image_detail = new Image_BoardingHouse();
+                    if(isset($file))
+                    {
+                        // echo "<pre>";
+                        // print_r(time().'.'.$file->getClientOriginalName());
+                        // echo "</pre>";
+                        $image_detail->image = time().'.'.$file->getClientOriginalName();
+                        $image_detail->id_boardinghouse = $id;
+                        $file->move('resources/UploadImage/ImageBoardingHouse/BoardingDetail/', time().'.'.$file->getClientOriginalName());
+                        $image_detail->save();
+                    }
                 }
+                $update_boardinghouse->save();
             }
-            $update_boardinghouse->save();
+            else
+            {
+
+                $update_boardinghouse->name = $req->name;
+                $update_boardinghouse->price = $req->price;
+                $update_boardinghouse->status = $req->status;
+                $update_boardinghouse->description = $req->description;
+                $update_boardinghouse->id_type_boardinghouse = $req->id_type_boardinghouse;
+                $update_boardinghouse->id_street = $req->nostreet;
+                $update_boardinghouse->address = $req->address;
+                $update_boardinghouse->acreage = $req->acreage;
+                $update_boardinghouse->number = $req->number;
+                $update_boardinghouse->type = $req->type;
+                $update_boardinghouse->lng = $req->lng;
+                $update_boardinghouse->lat = $req->lat;
+                $update_boardinghouse->object = $req->object;
+
+
+                // echo "<pre>";
+                // print_r($update_boardinghouse->toArray());
+                // echo "</pre>";
+                $update_boardinghouse->save();
+            }
         }
         else
         {
+            if($req->hasFile('picture'))
+            {
+                $update_boardinghouse->name = $req->name;
+                $update_boardinghouse->price = $req->price;
+                $update_boardinghouse->status = $req->status;
+                $update_boardinghouse->description = $req->description;
+                $update_boardinghouse->id_type_boardinghouse = $req->id_type_boardinghouse;
+                $update_boardinghouse->id_street = $req->street;
+                $update_boardinghouse->address = $req->address;
+                $update_boardinghouse->number = $req->number;
+                $update_boardinghouse->acreage = $req->acreage;
+                $update_boardinghouse->type = $req->type;
+                $update_boardinghouse->lng = $req->lng;
+                $update_boardinghouse->lat = $req->lat;
+                $update_boardinghouse->object = $req->object;
 
-            $update_boardinghouse->name = $req->name;
-            $update_boardinghouse->price = $req->price;
-            $update_boardinghouse->status = $req->status;
-            $update_boardinghouse->description = $req->description;
-            $update_boardinghouse->id_type_boardinghouse = $req->id_type_boardinghouse;
-            $update_boardinghouse->id_area = $req->area;
-            $update_boardinghouse->address = $req->address;
-            $update_boardinghouse->acreage = $req->acreage;
-            $update_boardinghouse->type = $req->type;
-            $update_boardinghouse->lng = $req->y;
-            $update_boardinghouse->lat = $req->x;
-            $update_boardinghouse->save();
+                // echo "<pre>";
+                // print_r($update_boardinghouse->toArray());
+                // echo "</pre>";
+
+                foreach ($req->file('picture') as $file) {                
+                    $image_detail = new Image_BoardingHouse();
+                    if(isset($file))
+                    {
+                        // echo "<pre>";
+                        // print_r(time().'.'.$file->getClientOriginalName());
+                        // echo "</pre>";
+                        $image_detail->image = time().'.'.$file->getClientOriginalName();
+                        $image_detail->id_boardinghouse = $id;
+                        $file->move('resources/UploadImage/ImageBoardingHouse/BoardingDetail/', time().'.'.$file->getClientOriginalName());
+                        $image_detail->save();
+                    }
+                }
+                $update_boardinghouse->save();
+            }
+            else
+            {
+                $update_boardinghouse->name = $req->name;
+                $update_boardinghouse->price = $req->price;
+                $update_boardinghouse->status = $req->status;
+                $update_boardinghouse->description = $req->description;
+                $update_boardinghouse->id_type_boardinghouse = $req->id_type_boardinghouse;
+                $update_boardinghouse->id_street = $req->nostreet;
+                $update_boardinghouse->address = $req->address;
+                $update_boardinghouse->acreage = $req->acreage;
+                $update_boardinghouse->number = $req->number;
+                $update_boardinghouse->type = $req->type;
+                $update_boardinghouse->lng = $req->lng;
+                $update_boardinghouse->lat = $req->lat;
+                $update_boardinghouse->object = $req->object;
+                
+
+                // echo "<pre>";
+                // print_r($update_boardinghouse->toArray());
+                // echo "</pre>";
+                $update_boardinghouse->save();
+            }
         }
         return redirect()->back()->with('thongbao','cập nhật thành công');
     }
@@ -358,6 +461,6 @@ class PageControllerSalesChannel extends Controller
         // print_r($product);
         // echo "</pre>";
 
-       return view('PageSaleChannel.PageProductChannel.PageHRMProduct', compact('product'));
-   }
+        return view('PageSaleChannel.PageProductChannel.PageHRMProduct', compact('product'));
+    }
 }

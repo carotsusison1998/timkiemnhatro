@@ -264,3 +264,43 @@ Route::group(['prefix'=>''],function(){
 		'uses' => 'PageControllerUser@PostChange'
 	]);
 });
+
+Route::get('all-motel/{id?}', [
+	'as' => 'all-motel',
+	'uses' => 'PageControllerHome@AllBoardingClient'
+]);
+
+Route::group(['prefix'=>''],function(){
+	Route::get('search', [
+		'as' => 'search',
+		'uses' => 'PageControllerSearch@SearchBoarding'
+	]);
+
+	Route::get('search-motel', [
+		'as' => 'search-motel',
+		'uses' => 'PageControllerSearch@SearchBoardingClient'
+	]);
+
+	Route::get('get-district', [
+		'as' => 'getdistrict',
+		'uses' => 'PageControllerAjax@GetDistrict'
+	]);
+
+	Route::get('get-wards', [
+		'as' => 'getwards',
+		'uses' => 'PageControllerAjax@GetWards'
+	]);
+
+	Route::get('get-street', [
+		'as' => 'getstreet',
+		'uses' => 'PageControllerAjax@GetStreet'
+	]);
+
+	Route::get('get-money', [
+		'as' => 'getmoney',
+		'uses' => 'PageControllerAjax@GetMoney'
+	]);
+
+	
+});
+

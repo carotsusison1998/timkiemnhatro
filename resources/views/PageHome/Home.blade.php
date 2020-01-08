@@ -16,46 +16,87 @@
         text-shadow: 2px 2px 2px #00ff00;
         margin-bottom: 20px;
     }
+
+
+    .card{
+        position: relative;
+        background: #fff;
+        width: 300px;
+        height: 300px;
+        margin: 0 auto;
+    }
+
+    .card .content{
+        width: 300px;
+        padding: 30px;
+        box-sizing: border-box;
+    }
+    .card .content a{
+        display: inline-block;
+        margin: 10px 0 0;
+        padding: 10px 20px;
+        text-decoration: none;
+        border: 2px solid #262626;
+        color: #262626;
+        font-weight: 600;
+    }
+
+    .card .content a:hover{
+        background: #665A5A;
+        color: white
+    }
+
+    .card .content p{
+        font-size: 15px;
+    }
+
+    .card .sliderText{
+        position: relative;
+        width: 100%;
+        height: 100px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #000;
+    }
+    .card .sliderText h3{
+        color: #fff;
+        font-size: 2em;
+    }
+
+    .card .sliderText p{
+        color: #fff;
+    }
+    .swiper-slide{
+        width: 300px;
+    }
 </style>
-<!--service block--->
-<!-- <section class="service-block">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-3 col-sm-3 col-xs-6 width-50">
-                <div class="service-details text-center">
-                    <div class="service-image">
-                        <img alt="image" class="img-responsive" src="./vacayhome/images/icons/wifi.png">
-                    </div>
-                    <h4><a>free wifi</a></h4>
+
+<div class="swiper-container">
+    <h2 class="text-center">TOP SALES OF WEBSITE</h2>
+    <div class="swiper-wrapper">
+        @foreach($top as $value)
+        <?php 
+        $boarding = DB::table('boarding_house')->where('id', $value['id_boardinghouse'])->first();
+        $owner = DB::table('customer')->where('id', $boarding->id_owner)->first();
+        ?>
+        <div class="swiper-slide">
+            <div class="card">
+                <div class="sliderText">
+                    <p>Nhà Trọ: </p><h3>{{$boarding->name}}</h3> <br> <br>
+                    <img src="./resources/UploadImage/Image/{{$owner->image}}" alt="" width="10px" height="10px">
                 </div>
-            </div>
-            <div class="col-md-3 col-sm-3 col-xs-6 width-50">
-                <div class="service-details text-center">
-                    <div class="service-image">
-                        <img alt="image" class="img-responsive" src="./vacayhome/images/icons/key.png">
-                    </div>
-                    <h4><a>room service</a></h4>
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-3 col-xs-6 mt-25">
-                <div class="service-details text-center">
-                    <div class="service-image">
-                        <img alt="image" class="img-responsive" src="./vacayhome/images/icons/car.png">
-                    </div>
-                    <h4><a>free parking</a></h4>
-                </div>  
-            </div>
-            <div class="col-md-3 col-sm-3 col-xs-6 mt-25">
-                <div class="service-details text-center">
-                    <div class="service-image">
-                        <img alt="image" class="img-responsive" src="./vacayhome/images/icons/user.png">
-                    </div>
-                    <h4><a>customer support</a></h4>
+                <div class="content">
+                    <p>Chủ nhà trọ: {{$owner->first_name}} {{$owner->last_name}}</p>
+                    <p>Số điện thoại: {{$owner->phone}}</p>
+                    <p>Địa chỉ: {{$owner->address}}</p>
+                    <a href="{{route('all-motel', $owner->id)}}">Xem thêm</a>
                 </div>
             </div>
         </div>
+        @endforeach
     </div>
-</section> -->
+</div>
 
 <!--gallery block--->
 <section class="gallery-block gallery-front">
@@ -74,7 +115,7 @@
                 </div>
             </div>
             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                    <h3>Khách sạn </h3>
+                <h3>Khách sạn </h3>
 
                 <div class="gallery-image">
                     <img class="img-responsive" src="./vacayhome/images/anh2.jpg">
@@ -85,7 +126,7 @@
                 </div>
             </div>
             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                    <h3>Đồ nội thất</h3>
+                <h3>Đồ nội thất</h3>
 
                 <div class="gallery-image">
 
@@ -97,7 +138,7 @@
                 </div>
             </div>
             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                    <h3>Đặt Vé Xe</h3>
+                <h3>Đặt Vé Xe</h3>
 
                 <div class="gallery-image">
 
@@ -150,7 +191,7 @@
                     <div class="product-desc-side">
                         <h3><a href="{{url('motel-detail', $value['id'])}}">Nhà Trọ: {{$value['name']}}</a></h3> <br>
                         <h4><p style="background-color: #ff4157; border-radius: 30px; padding: 5px; margin-top: 5px;">
-                            Giá Phòng: <b>{{number_format($value['price'])}} Vnd
+                            Giá Phòng: <b>{{$value['price']}} Vnd
                             </p>
                         </h4> <br>  
                         <p><li>Diện Tích: {{$value['acreage']}}m2</li></p>
@@ -325,4 +366,22 @@
         </div>
     </div>
 </section>
+<script>
+    var swiper = new Swiper('.swiper-container', {
+        effect: 'coverflow',
+        grabCursor: true,
+        centeredSlides: false,
+        slidesPerView: 'auto',
+        coverflowEffect: {
+            rotate: 30,
+            stretch: 0,
+            depth: 200,
+            modifier: 1,
+            slideShadows : true,
+        },
+        pagination: {
+            el: '.swiper-pagination',
+        },
+    });
+</script>
 @endsection

@@ -2,13 +2,6 @@
 	@section('content')
 	<section>
 		<h3 class="text-center">Chi Tiết Nhà Trọ: {{$detail_boarding['name']}}</h3>
-		@if(count($errors) > 0)
-		@foreach($errors->all() as $err)
-		<div class="alert alert-warning">
-			{{$err}}
-		</div>
-		@endforeach
-		@endif
 		@if(Session::has('thongbao'))
 		<div class="alert alert-success">{{Session::get('thongbao')}}</div>
 		@endif
@@ -16,31 +9,46 @@
 			<a href="{{route('hrm-boardinghouse', $customer['id'])}}"  style="color: white"><b>Trở về</b></a>
 		</button>
 		<form action="{{route('update-boardinghouse')}}" method="post" enctype="multipart/form-data">
-			<input type="hidden" name="_token" value="{{csrf_token()}}">
-			<input type="hidden" name="id" value="{{$detail_boarding['id']}}">
+			<input type="hidden" name="_token" value="{{csrf_token()}}"> <br>
+			<input type="hidden" name="id" value="{{$detail_boarding->id}}">
+			<input type="hidden" name="status" value="{{$detail_boarding->status}}">
 			<fieldset class="form-group">
-				<label for="exampleInputEmail1">Tên Nhà Trọ</label>
-				<input type="text" class="form-control" id="exampleInputEmail1"  value="{{$detail_boarding['name']}}" placeholder="tên nhà trọ" name="name">
+				<label for="exampleInputPassword1">Địa Chỉ Chính Xác</label>
+				<input type="text" class="form-control" name="address" placeholder="địa chỉ chính xác" value="{{$detail_boarding->address}}">
 			</fieldset>
 			<fieldset class="form-group">
-				<label for="exampleInputPassword1">Giá Nhà Trọ</label>
-				<input type="text" class="form-control" id="exampleInputPassword1"  value="{{$detail_boarding['price']}}" placeholder="giá nhà trọ" name="price">
-			</fieldset>
-			<fieldset class="form-group">
-				<label for="exampleInputPassword1">Diện Tích</label>
-				<input type="text" class="form-control" id="exampleInputPassword1"  value="{{$detail_boarding['acreage']}}" placeholder="giá nhà trọ" name="acreage">
-			</fieldset>
-			<fieldset class="form-group">
-				<label for="exampleInputPassword1">Khu Vực</label>
-				<?php 
-				$data = DB::table('Area')->where('id',$detail_boarding['id_area'])->first();
-				?>
-				<select class="form-control" id="eexampleSelect11" name="area">
-					<option value="{{$detail_boarding['id_area']}}" selected="">{{$data->name}}</option>
-					@foreach($area as $value)
-					<option value="{{$value->id}}">{{$value->name}}</option>
-					@endforeach
-				</select>
+				<div class="col-sm-2" style="margin-left: -15px;">
+					<label for="exampleInputEmail1">Khu Vực</label>
+					<select class="form-control" id="area" name="area">
+						<option value="">Chọn tỉnh/thành phố</option>
+						@foreach($area as $value)
+						<option value="{{$value['id']}}">{{$value['name']}}</option>
+						@endforeach
+					</select>
+				</div>
+				<div class="col-sm-2">
+					<label for="exampleInputEmail1">Quận/Huyện</label>
+
+					<select class="form-control" name="district" id="district">
+						
+					</select>
+				</div>
+				<div class="col-sm-3">
+					<label for="exampleInputEmail1">Phường/Xã</label>
+					<select class="form-control" name="wards" id="wards">
+						
+					</select>
+				</div>
+				<div class="col-sm-3">
+					<label for="exampleInputEmail1">Đường</label>
+					<select class="form-control" name="street" id="street">
+						<input type="hidden" name="nostreet" value="{{$detail_boarding->id_street}}">
+					</select>
+				</div>
+				<div class="col-sm-2" style="margin-left: 15px">
+					<label for="exampleInputEmail1">Số Nhà</label>
+					<input type="text" class="form-control" name="number" value="{{$detail_boarding->number}}">
+				</div>
 			</fieldset>
 			<fieldset class="form-group">
 				<label for="exampleInputPassword1">Loại Nhà Trọ </label>
@@ -55,57 +63,70 @@
 				</select>
 			</fieldset>
 			<fieldset class="form-group">
-				<label for="exampleInputPassword1">Trạng Thái</label>
-				<select class="form-control" id="eexampleSelect11" name="status">
-					@if($detail_boarding['status'] == 1)
-					<option value="1" selected="">Còn phòng</option>
-					<option value="0">Hết phòng</option>
-					@else
-					<option value="1">Còn phòng</option>
-					<option value="0" selected="">Hết phòng</option>
-					@endif
-				</select>
+				<label for="exampleInputEmail1">Tên Nhà Trọ</label>
+				<input type="text" class="form-control" id="exampleInputEmail1" placeholder="tên nhà trọ" name="name" value="{{$detail_boarding->name}}">
+			</fieldset>
+			<fieldset class="form-group">
+				<label for="exampleInputPassword1">Giá Nhà Trọ</label>
+				<input type="text" class="form-control" id="price" placeholder="giá nhà trọ" name="price" value="{{$detail_boarding->price}}">
+			</fieldset>
+			<fieldset class="form-group">
+				<label for="exampleInputPassword1">Diện Tích</label>
+				<input type="text" class="form-control" id="dientich" placeholder="diện tích nhà trọ" name="acreage" value="{{$detail_boarding->acreage}}">
 			</fieldset>
 			<fieldset class="form-group">
 				<label for="exampleInputPassword1">Gác Lửng</label>
 				<select class="form-control" id="eexampleSelect11" name="type">
-					@if($detail_boarding['type'] === "Có Gác")
+					@if($detail_boarding->type == "Có Gác")
 					<option value="Có Gác" selected="">Có Gác</option>
 					<option value="Không Gác">Không Gác</option>
-					@elseif($detail_boarding['type'] === "Không Gác")
-					<option value="Có Gác">Có Gác</option>
-					<option value="Không Gác" selected="">Không Gác</option>
 					@else
 					<option value="Có Gác">Có Gác</option>
-					<option value="Không Gác">Không Gác</option>
+					<option value="Không Gác" selected="">Không Gác</option>
 					@endif
 				</select>
 			</fieldset>
 			<fieldset class="form-group">
-				<label for="exampleTextarea">Địa Chỉ Nhà Trọ</label>
-				<textarea class="form-control" id="exampleTextarea" rows="3" name="address">{{$detail_boarding['address']}}
+				<label for="exampleInputPassword1">Đối Tượng</label>
+				<select class="form-control" id="eexampleSelect11" name="object">
+					@if($detail_boarding->object == "Cả hai")
+					<option value="Cả hai" selected="">Cả hai</option>
+					<option value="Nam">Nam</option>
+					<option value="Nữ">Nữ</option>
+					@elseif($detail_boarding->object == "Nam")
+					<option value="Cả hai">Cả hai</option>
+					<option value="Nam" selected="">Nam</option>
+					<option value="Nữ">Nữ</option>
+					@else
+					<option value="Cả hai">Cả hai</option>
+					<option value="Nam">Nam</option>
+					<option value="Nữ" selected="">Nữ</option>
+					@endif
+				</select>
+			</fieldset>
+			<fieldset class="form-group">
+				<label for="exampleTextarea">Mô Tả Về Nhà Nhà Trọ</label>
+				<textarea class="form-control"  rows="15" name="description">{{$detail_boarding->description}}
 				</textarea>
 			</fieldset>
 			<fieldset class="form-group">
-				<a href="https://www.openstreetmap.org/export#map=19/10.04612/105.76814">Lấy vị trí</a> <br> <br>	
-				<div class="col-sm-6" style="padding-left: 0px;">
-					<input type="" class="form-control" placeholder="trục y" name="y" value="{{$detail_boarding['lng']}}">
+				<!-- <a href="https://www.openstreetmap.org/export#map=19/10.04612/105.76814">Lấy vị trí trực tiếp trên maps</a> <br> <br>
+				<div class="col-sm-6"  style="padding-left: 0px;">
+					<input type="text" class="form-control" placeholder="vị trí trục tung y, ví dụ: 10,202135121" name="lon">
 				</div>
-				<div class="col-sm-6"style="padding-right: 0px;">
-					<input type="" class="form-control" placeholder="trục x" name="x" value="{{$detail_boarding['lat']}}">
+				<div class="col-sm-6"  style="padding-right: 0px;">
+					<input type="text" class="form-control" placeholder="vị trí trục hoạch x, ví dụ: 105,154531044" name="lat">
+				</div> -->
+				<input type="hidden" name="lat" value="{{$detail_boarding['lat']}}">
+				<input type="hidden" name="lng" value="{{$detail_boarding['lng']}}">
+
+				<input onclick="getLocation()" type="button" class="btn btn-danger" value="Lấy vị trí trực tiếp hiện tại"> <br> <br>
+				<div class="col-sm-5">
+					<p id="lat"></p>
 				</div>
-			</fieldset>
-			<fieldset class="form-group">
-				<label for="exampleTextarea">Mô Tả Về Nhà Trọ</label>
-				<textarea class="form-control" id="exampleTextarea" rows="3" name="description">{{$detail_boarding['description']}}
-				</textarea>
-			</fieldset>
-			<fieldset class="form-group">
-				<label for="exampleTextarea">Ảnh Nền Nhà Trọ</label> <br>
-				<img src="../resources/UploadImage/ImageBoardingHouse/BoardingAvatar/{{$detail_boarding['image']}}" alt="" width="150px" height="150px">
-				<a href="" title="xóa">
-					<i class="fa fa-window-close"  style="position: relative; top: -65px; right: 21px"></i>
-				</a>
+				<div class="col-sm-5">
+					<p id="lon"></p>
+				</div>
 			</fieldset>
 			<fieldset class="form-group">
 				<label for="exampleTextarea">Ảnh Chi Tiết Nhà Trọ</label> <br>
@@ -123,20 +144,21 @@
 				<br> <br>
 				<div class="form-group" id="insert">
 					<label>Thêm Ảnh Chi Tiết</label>
-					<input type="file" name="picture[]">
+					<input type="file" name="picture[]" multiple="">
 				</div>
-				<button type="button" class=" btn btn-primary" id="addImage">Thêm Ảnh</button>
+				<button type="button" class=" btn btn-primary" id="addImage" >Thêm Ảnh</button>
 				@else
 				<div class="form-group" id="insert">
 					<label>Thêm Ảnh Chi Tiết</label>
-					<input type="file" name="picture[]">
+					<input type="file" name="picture[]" multiple="">
 				</div>
 				<button type="button" class=" btn btn-primary" id="addImage">Thêm Ảnh</button>
 				<br>
 				<span>Chưa có ảnh chi tiết</span>
 				@endif
 			</fieldset>
-			<button class="btn btn-success center-block">Cập Nhật</button>
+
+			<button type="submit" class="btn btn-primary">Thêm Nhà Trọ</button>
 		</form>
 	</section>
 	@endsection
@@ -148,4 +170,90 @@
 				$("#insert").append('</br><div class="form-group"><label>Tải Ảnh Lên</label><input type="file" name="picture[]"></div>');
 			});
 		});
+		var x = document.getElementById("demo");
+
+		function getLocation() {
+			if (navigator.geolocation) 
+			{
+				navigator.geolocation.getCurrentPosition(showPosition);
+			} 
+			else 
+			{ 
+				alert("Geolocation is not supported by this browser.");
+			}
+		}
+
+		function showPosition(position) {
+			var lat = position.coords.latitude;
+			var lon = position.coords.longitude;
+			document.getElementById("lat").innerHTML = '<input type="text" value="'+lat+'" name="lat"/>';
+			document.getElementById("lon").innerHTML = '<input type="text" value="'+lon+'" name="lng"/>';
+		}
+
+		$(document).ready(function(){
+			$('#area').change(function(){
+				var id_district = $(this).val();
+			// console.log(id_district);
+			$.ajax({
+				url: '{{route('getdistrict')}}',
+				method: 'get',
+				data: {id_district: id_district},
+				success: function(data){
+					$('#district').html(data);
+					console.log(data);
+				}
+			});
+		})
+
+			$('#district').change(function(){
+				var id_wards = $(this).val();
+			// console.log(id_wards);
+			$.ajax({
+				url: '{{route('getwards')}}',
+				method: 'get',
+				data: {id_wards: id_wards},
+				success: function(data){
+					$('#wards').html(data);
+					console.log(data);
+				}
+			});
+		})
+
+
+			$('#wards').change(function(){
+				var id_street = $(this).val();
+			// console.log(id_street);
+			$.ajax({
+				url: '{{route('getstreet')}}',
+				method: 'get',
+				data: {id_street: id_street},
+				success: function(data){
+					$('#street').html(data);
+					console.log(data);
+				}
+			});
+		})
+			$('#price').change(function(){
+				var price = $(this).val();
+				$.ajax({
+					url: '{{route('getmoney')}}',
+					method: 'get',
+					data: {price: price},
+					success: function(data){
+						$('#price').val(data);
+						console.log(data);
+					}
+				});
+			})
+
+			$('#dientich').click(function(){
+				$('#dientich').val('');
+			})
+
+			$('#dientich').change(function(){
+				var dientich = $(this).val();
+				$('#dientich').val(dientich+'m2');
+			})
+
+		})
 	</script>
