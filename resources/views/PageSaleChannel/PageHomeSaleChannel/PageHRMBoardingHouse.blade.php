@@ -23,7 +23,7 @@
 	<h2 class="text-center">Danh Sách Nhà Trọ</h2>
 	<div class="clearfix"><br></div>
 	<div class="clearfix"></div>
-	<a href="{{route('insert-boardinghouse')}}" id="insert"><b><button class="btn btn-success ">Thêm Nhà Trọ</button></b></a>
+	<a href="{{route('insert-boardinghouse')}}" id="insert"><b><button class="btn btn-success" style="width: 150px">Thêm Nhà Trọ</button></b></a>
 	<input type="text" class="form-control" placeholder="tìm kiếm" id="search">
 	<table class="table table-responsive table-inverse">
 		<thead>
@@ -50,11 +50,11 @@
 				<td>{{$data->name}}</td>
 				<td>
 					@if($value['status'] == 4 || $value['status'] == 3 || $value['status'] == 2)
-					<a href="{{route('update-boardinghousee', $value['id'])}}"><button class="btn btn-info" disabled="" style="color: black">Sửaa </button></a>
+					<a href="{{route('update-boardinghousee', $value['id'])}}"><button class="btn btn-info" disabled="" style="color: black">Sửa </button></a>
 					@else
 					<a href="{{route('update-boardinghousee', $value['id'])}}"><button class="btn btn-info" style="color: black">Sửa</button></a>
 					@endif
-					<a href="{{route('delete-boardinghouse', $value['id'])}}"><button class="btn btn-group">Xóa</button></a>
+					<a href="{{route('delete-boardinghouse', $value['id'])}}"><button class="btn btn-warning">Xóa</button></a>
 				</td>
 				@if($value['status'] == 0)
 				<td>Hết phòng</td>

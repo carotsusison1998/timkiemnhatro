@@ -13,8 +13,14 @@
 			<input type="hidden" name="id" value="{{$detail_boarding->id}}">
 			<input type="hidden" name="status" value="{{$detail_boarding->status}}">
 			<fieldset class="form-group">
+				<?php 
+					$street = DB::table('street')->where('id', $detail_boarding['id_street'])->first();
+                    $wards = DB::table('wards')->where('id', $street->id_wards)->first();
+                    $district = DB::table('district')->where('id', $wards->id_district)->first();
+                    $areas = DB::table('area')->where('id', $district->id_area)->first();
+				?>
 				<label for="exampleInputPassword1">Địa Chỉ Chính Xác</label>
-				<input type="text" class="form-control" name="address" placeholder="địa chỉ chính xác" value="{{$detail_boarding->address}}">
+				<input type="text" class="form-control" name="address" placeholder="địa chỉ chính xác" value="{{$detail_boarding['number'] .', '.$street->name.', '.$wards->name.', '.$district->name.', '.$areas->name}}" disabled="">
 			</fieldset>
 			<fieldset class="form-group">
 				<div class="col-sm-2" style="margin-left: -15px;">

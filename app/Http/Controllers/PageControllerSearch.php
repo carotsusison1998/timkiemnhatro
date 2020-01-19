@@ -73,7 +73,7 @@ class PageControllerSearch extends Controller
                                             '</h3>'.
                                             '<h4>'.
                                                 '<p style="background-color: #ff4157; border-radius: 30px; padding: 5px; margin-top: 20px;">'.
-                                                "Giá Phòng: ". '<b>'. number_format($value['price']). "Vnd".
+                                                "Giá Phòng: ". '<b>'. $value['price']. "Vnd".
                                                 '</p>'.
                                             '</h4>'. "<br>".
                                             '<p>'.'<li>'."Diện Tích: " .$value['acreage']."m2". '</li>'.'</p>'.
@@ -90,8 +90,6 @@ class PageControllerSearch extends Controller
                 }
             }
         }
-        return Response($output);
-
-
+        return $output;
     }
 }

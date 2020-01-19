@@ -61,10 +61,6 @@
 			</div>
 		</fieldset>
 		<fieldset class="form-group">
-			<label for="exampleInputPassword1">Địa Chỉ Chính Xác</label>
-			<input type="text" class="form-control" name="address" placeholder="địa chỉ chính xác">
-		</fieldset>
-		<fieldset class="form-group">
 			<label for="exampleSelect1">Loại Phòng Trọ</label>
 			<select class="form-control" id="eexampleSelect11" name="type_boardinghouse">
 				@foreach($type_boardinghouse as $value)

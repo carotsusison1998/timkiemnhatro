@@ -1,4 +1,9 @@
 
+<style>
+    #abc{
+        z-index: 111;
+    }
+</style>
 <div class="row" id="header">
     <div class="col-md-6">
                             <!--                            <a href="#"> </a>
@@ -66,7 +71,7 @@
                             <div class="col-md-2  col-sm-4 col-xs-12 hidden-sm">
                                 @if(Auth::check())
                                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"  style="background-color: #ff4157; color: white">
-                                    <span>Xin chào: {{$customer['last_name']}} </span>
+                                    <span>Xin chào: {{$customer['last_name']}}</span>
                                 </button>
                                 <ul class="dropdown-menu">
                                     <?php 
@@ -74,10 +79,6 @@
                                     ?>
                                     @if($hassales != null)
                                     <li>
-                                        <a class="dropdown-item" href="{{route('ordered-boardinghouse',$customer['id'])}}">
-                                            <button type="button" class="btn btn-success">Phòng Đã Đặt
-                                            </button>
-                                        </a>
                                         <a class="dropdown-item" href="{{route('sales-channel', $customer['id'])}}">
                                             <button type="button" class="btn btn-success">Kênh Bán Hàng
                                             </button>
@@ -99,6 +100,10 @@
                                         </a>
                                         <a class="dropdown-item" href="{{route('change-information', $customer['id'])}}">
                                             <button type="button" class="btn btn-success">Đổi Thông Tin
+                                            </button>
+                                        </a>
+                                        <a class="dropdown-item" href="{{url('notice', $customer['id'])}}">
+                                            <button type="button" class="btn btn-success">Thông Báo
                                             </button>
                                         </a>
                                     </li>
@@ -219,27 +224,51 @@
             <li data-target="#myCarousel1" data-slide-to="2"></li>
         </ol>
         <div class="carousel-inner">
-            <div class="item active"> <img src="./vacayhome/images/banner.jpg" style="width:100%; height: 500px; opacity: 0.8" alt="First slide">
+            <div class="item active"> <img src="{{asset('vacayhome/images/anh5.jpg')}}" style="width:100%; height: 500px; opacity: 0.8" alt="First slide">
                 <div class="carousel-caption" style=" margin-top: -35px">
                     <h1 style="color: #ff4157">vacayhome<br>Kiếm Nhà Trọ Siêu Tốc</h1>
                 </div>
             </div>
-            <div class="item"> <img src="./vacayhome/images/banner2.jpg" style="width:100%; height: 500px; opacity: 0.8" alt="Second slide">
+            <div class="item"> <img src="{{asset('vacayhome/images/anh6.jpg')}}" style="width:100%; height: 500px; opacity: 0.8" alt="First slide">
+                <div class="carousel-caption" style=" margin-top: -35px">
+                    <h1 style="color: #ff4157">vacayhome<br>Kiếm Nhà Trọ Siêu Tốc</h1>
+                </div>
+            </div>
+            <div class="item"> <img src="{{asset('vacayhome/images/anh7.jpg')}}" style="width:100%; height: 500px; opacity: 0.8" alt="First slide">
+                <div class="carousel-caption" style=" margin-top: -35px">
+                    <h1 style="color: #ff4157">vacayhome<br>Kiếm Nhà Trọ Siêu Tốc</h1>
+                </div>
+            </div>
+            <div class="item"> <img src="{{asset('vacayhome/images/anh8.jpg')}}" style="width:100%; height: 500px; opacity: 0.8" alt="First slide">
+                <div class="carousel-caption" style=" margin-top: -35px">
+                    <h1 style="color: #ff4157">vacayhome<br>Kiếm Nhà Trọ Siêu Tốc</h1>
+                </div>
+            </div>
+            <div class="item"> <img src="{{asset('vacayhome/images/anh9.jpg')}}" style="width:100%; height: 500px; opacity: 0.8" alt="Second slide">
                 <div class="carousel-caption" style=" margin-top: -35px">
                     <h1 style="color: #ff4157;">vacayhome<br>Mua Sản Phẩm Siêu Nhanh</h1> 
                 </div>
             </div>
-            <div class="item"> <img src="./vacayhome/images/banner4.png" style="width:100%; height: 500px; opacity: 0.8" alt="Third slide">
+            <div class="item"> <img src="{{asset('vacayhome/images/anh10.png')}}" style="width:100%; height: 500px; opacity: 0.8" alt="Second slide">
                 <div class="carousel-caption" style=" margin-top: -35px">
-                    <h1 style="color: #ff4157">vacayhome<br>Đặt Vé Xe Siêu Dễ</h1> 
+                    <h1 style="color: #ff4157;">vacayhome<br>Mua Sản Phẩm Siêu Nhanh</h1> 
                 </div>
-
+            </div>
+            <div class="item"> <img src="./vacayhome/images/anh11.jpg" style="width:100%; height: 500px; opacity: 0.8" alt="Second slide">
+                <div class="carousel-caption" style=" margin-top: -35px">
+                    <h1 style="color: #ff4157;">vacayhome<br>Mua Sản Phẩm Siêu Nhanh</h1> 
+                </div>
+            </div>
+            <div class="item"> <img src="{{asset('vacayhome/images/anh12.jpg')}}" style="width:100%; height: 500px; opacity: 0.8" alt="Second slide">
+                <div class="carousel-caption" style=" margin-top: -35px">
+                    <h1 style="color: #ff4157;">vacayhome<br>Mua Sản Phẩm Siêu Nhanh</h1> 
+                </div>
             </div>
             <a class="left carousel-control" href="#myCarousel1" data-slide="prev"> 
-                <img src="./vacayhome/images/icons/left-arrow.png" onmouseover="this.src = './vacayhome/images/icons/left-arrow-hover.png'" onmouseout="this.src = './vacayhome/images/icons/left-arrow.png'" alt="left">
+                <img src="{{asset('vacayhome/images/icons/left-arrow.png')}}" onmouseover="this.src = '{{asset('vacayhome/images/icons/left-arrow-hover.png')}}'" onmouseout="this.src = '{{asset('vacayhome/images/icons/left-arrow.png')}}'" alt="left">
             </a>
             <a class="right carousel-control" href="#myCarousel1" data-slide="next">
-                <img src="./vacayhome/images/icons/right-arrow.png" onmouseover="this.src = './vacayhome/images/icons/right-arrow-hover.png'" onmouseout="this.src = './vacayhome/images/icons/right-arrow.png'" alt="left">
+                <img src="{{asset('vacayhome/images/icons/right-arrow.png')}}" onmouseover="this.src = '{{asset('vacayhome/images/icons/right-arrow-hover.png')}}'" onmouseout="this.src = '{{asset('vacayhome/images/icons/right-arrow.png')}}'" alt="left">
             </a>
 
         </div>
@@ -257,3 +286,6 @@
 
 </script> -->
 
+<script>
+    $("div.alert").delay(3000).slideUp();
+</script>

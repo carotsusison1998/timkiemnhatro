@@ -18,6 +18,7 @@ use App\Product;
 use App\street;
 use App\wards;
 use App\district;
+use App\notifycations;
 use Auth;
 use Input;
 use Imagick;
@@ -44,7 +45,6 @@ class PageControllerSalesChannel extends Controller
             [
                 'name' => 'required',
                 'price' => 'required',
-                'address' => 'required',
                 'description' => 'required|min:20',
                 'image' => 'required|mimes:jpeg,png,jpg',
                 'picture' => 'required',
@@ -55,7 +55,6 @@ class PageControllerSalesChannel extends Controller
             [
                 'name.required' => 'vui lòng nhập tên nhà trọ',
                 'price.required' => 'vui lòng nhập giá nhà trọ',
-                'address.required' => 'vui lòng nhập địa chỉ nhà trọ',
                 'description.required' => 'vui lòng nhập mô tả nhà trọ',
                 'description.min' => 'vui lòng nhập mô tả nhà trọ nhiều hơn 20 kí tự',
                 'image.required' => 'vui lòng nhập ảnh đại diện nhà trọ',
@@ -79,7 +78,6 @@ class PageControllerSalesChannel extends Controller
         $boardinghouse->id_type_boardinghouse = $req->type_boardinghouse;
         $boardinghouse->id_owner = $id_customer->id;
         $boardinghouse->id_street = $req->street;
-        $boardinghouse->address = $req->address;
         $boardinghouse->acreage = $req->acreage;
         $boardinghouse->type = $req->type;
         $boardinghouse->object = $req->object;
@@ -125,10 +123,11 @@ class PageControllerSalesChannel extends Controller
         $booking_detail = Booking_Detail::where('id_boardinghouse', $id)->first();
         $booking = Booking::where('id', $booking_detail['id_booking'])->first();
         $customers = Customer::where('id', $booking['id_customer'])->first();
+        $notify = notifycations::where('id_customer', $customers->id)->get();
 
-        // echo "<pre>";
-        // dd($customers);
-        // echo "</pre>";
+        echo "<pre>";
+        print_r($notify->toArray());
+        echo "</pre>";
         
         return view('PageSaleChannel.PageHomeSaleChannel.PageDetailBoardingHouse', compact('detail_boarding', 'customers'));
     }
@@ -201,7 +200,6 @@ class PageControllerSalesChannel extends Controller
             [
                 'name' => 'required',
                 'price' => 'required',
-                'address' => 'required',
                 'description' => 'required|min:20',
                 'image' => 'mimes:jpeg,png,jpg',    
                 'number' => 'required',
@@ -210,7 +208,6 @@ class PageControllerSalesChannel extends Controller
             [
                 'name.required' => 'vui lòng nhập tên nhà trọ',
                 'price.required' => 'vui lòng nhập giá nhà trọ',
-                'address.required' => 'vui lòng nhập địa chỉ nhà trọ',
                 'description.required' => 'vui lòng nhập mô tả nhà trọ',
                 'description.min' => 'vui lòng nhập mô tả nhà trọ nhiều hơn 20 kí tự',
                 'image.mimes' =>'tệp ảnh nền bạn chọn không đúng định dạng là ảnh',
@@ -232,7 +229,6 @@ class PageControllerSalesChannel extends Controller
                 $update_boardinghouse->description = $req->description;
                 $update_boardinghouse->id_type_boardinghouse = $req->id_type_boardinghouse;
                 $update_boardinghouse->id_street = $req->nostreet;
-                $update_boardinghouse->address = $req->address;
                 $update_boardinghouse->number = $req->number;
                 $update_boardinghouse->acreage = $req->acreage;
                 $update_boardinghouse->type = $req->type;
@@ -268,7 +264,6 @@ class PageControllerSalesChannel extends Controller
                 $update_boardinghouse->description = $req->description;
                 $update_boardinghouse->id_type_boardinghouse = $req->id_type_boardinghouse;
                 $update_boardinghouse->id_street = $req->nostreet;
-                $update_boardinghouse->address = $req->address;
                 $update_boardinghouse->acreage = $req->acreage;
                 $update_boardinghouse->number = $req->number;
                 $update_boardinghouse->type = $req->type;
@@ -293,7 +288,6 @@ class PageControllerSalesChannel extends Controller
                 $update_boardinghouse->description = $req->description;
                 $update_boardinghouse->id_type_boardinghouse = $req->id_type_boardinghouse;
                 $update_boardinghouse->id_street = $req->street;
-                $update_boardinghouse->address = $req->address;
                 $update_boardinghouse->number = $req->number;
                 $update_boardinghouse->acreage = $req->acreage;
                 $update_boardinghouse->type = $req->type;
@@ -327,8 +321,7 @@ class PageControllerSalesChannel extends Controller
                 $update_boardinghouse->status = $req->status;
                 $update_boardinghouse->description = $req->description;
                 $update_boardinghouse->id_type_boardinghouse = $req->id_type_boardinghouse;
-                $update_boardinghouse->id_street = $req->nostreet;
-                $update_boardinghouse->address = $req->address;
+                $update_boardinghouse->id_street = $req->street;
                 $update_boardinghouse->acreage = $req->acreage;
                 $update_boardinghouse->number = $req->number;
                 $update_boardinghouse->type = $req->type;
@@ -349,8 +342,21 @@ class PageControllerSalesChannel extends Controller
     public function PostConfirmBoardingHouse(Request $req)
     {
         $boar = BoardingHouse::where('id', $req->id_boar)->first();
+        $booking_detail = Booking_Detail::where('id_boardinghouse', $boar->id)->first();
+        $booking = Booking::where('id', $booking_detail->id_booking)->first();
         $boar->status = '3';
         $boar->save();
+
+        $text = "Phòng đã đươc xác nhận đặt thành công, vui lòng vào trang cá nhân để xem thông tin đầy đủ hơn";
+        $notify = new notifycations;
+        $notify->id_boardinghouse = $boar->id;
+        $notify->id_customer = $booking->id_customer;
+        $notify->messages = $text;
+        $notify->save();
+        // echo "<pre>";
+        // print_r($notify->toArray());
+        // echo "</pre>";
+
         return redirect()->back()->with('thongbao', 'Xác nhận thành công');
     }
 
@@ -367,7 +373,6 @@ class PageControllerSalesChannel extends Controller
     {
         $boar = BoardingHouse::where('id', $req->id_boar)->first();
         $boar->status = '4';
-        
         $boar->save();
         return redirect()->back()->with('thongbao', 'Hủy thành công');
     }

@@ -18,10 +18,7 @@
                             <p><a href="mailto:demo@info.com"> tnduy.16.06.1998@gmail.com</a></p>
                         </li>
                     </ul>
-                    
-                </div>
-            </div>
-            <div class="col-md-6 col-sm-12 col-xs-12">
+                </div> <br> <br>
                 <div class="footer-details">
                     <h4>Các Liên Hệ Khác</h4>
                     <div class="footer-social-icon">
@@ -31,6 +28,17 @@
                     </div>
                 </div>
             </div>
+            <div class="col-md-6 col-sm-12 col-xs-12">
+             
+               <div class="footer-details">
+                <h4>Now On Instagram</h4>
+                <div class="row">
+                    <div class="instagram-images">
+                        <div id="instafeed"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
         </div>
 
         <div class="copyright">

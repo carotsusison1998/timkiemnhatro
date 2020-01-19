@@ -1,7 +1,4 @@
-	
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css" integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA==" crossorigin=""/>
-<script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js" integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg==" crossorigin=""></script>
-@extends('PageLayoutForDetail.master')
+@extends('master')
 @section('content')
 <style>
 	#text{
@@ -80,12 +77,22 @@
 				</div>
 			</div>
 			<div class="col-md-7 about-right">
-				<h3><a>Nhà Trọ {{$boardinghouse['name']}}</a></h3>
+				<h3><a>Nhà Trọ {{$boardinghouse->name}}</a></h3>
 				<ul class="list-unstyled list-inline">
 					<li style="background-color: #ff4157; border-radius: 30px; padding: 5px;">
 						<b>Giá Thuê: {{$boardinghouse['price']}} Vnd</b>
 					</li> <br>
-					<li><i class="fa fa-map-marker"></i> Địa Chỉ: {!!$boardinghouse['address']!!}</li> <br>	
+					<?php 
+					$street = DB::table('street')->where('id', $boardinghouse->id_street)->first();
+					$wards = DB::table('wards')->where('id', $street->id_wards)->first();
+					$district = DB::table('district')->where('id', $wards->id_district)->first();
+					$area = DB::table('area')->where('id', $district->id_area)->first();
+						// echo $wards->name;
+					?>
+					<li>
+						<i class="fa fa-map-marker"></i> 
+						Địa Chỉ: {{$boardinghouse->number.', '.$street->name.', '.$wards->name.', '.$district->name.', '.$area->name}}
+					</li> <br>	
 					<li>
 						<?php 
 						$owner = DB::table('Customer')->where('id', $boardinghouse['id_owner'])->first();
@@ -240,47 +247,47 @@
 			</div>
 		</div>
 	</div>
-	<section class="offspace-70">
-		<div class="map">
-			<div class="container">
-				<div id="sethPhatMap" class="map" style="border:0; width: 100%; height: 400px" allowfullscreen></div>
-			</div>
-		</div>
-	</section>
-
-	<!----resort-overview--->
-	<section class="resort-overview-block">
+</section>
+<section class="offspace-70">
+	<div class="map">
 		<div class="container">
-			<h3> Nhà Trọ Cung Chu</h3>
-			<div class="row">
-				@foreach($motelofid as $value)
-				<div class="col-md-6 col-sm-12 col-xs-12 remove-padd-right" style="padding-top: 20px">
-					<div class="side-A">
-						<div class="product-thumb">
-							<div  class="img-responsive" style="">
-								<a href="{{url('motel-detail', $value->id)}}">
-									<img src="../resources/UploadImage/ImageBoardingHouse/BoardingAvatar/{{$value->image}}"  alt="image" class="img-rounded" width="300px" height="300px">
-								</a>
-							</div>
+			<div id="sethPhatMap" class="map" style="border:0; width: 100%; height: 400px" allowfullscreen></div>
+		</div>
+	</div>
+</section>
+
+<!----resort-overview--->
+<section class="resort-overview-block">
+	<div class="container">
+		<h3> Nhà Trọ Cùng Chủ</h3>
+		<div class="row">
+			@foreach($motelofid as $value)
+			<div class="col-md-6 col-sm-12 col-xs-12 remove-padd-right" style="padding-top: 20px">
+				<div class="side-A">
+					<div class="product-thumb">
+						<div  class="img-responsive" style="">
+							<a href="{{url('motel-detail', $value->id)}}">
+								<img src="../resources/UploadImage/ImageBoardingHouse/BoardingAvatar/{{$value->image}}"  alt="image" class="img-rounded" width="300px" height="300px">
+							</a>
 						</div>
 					</div>
-					<div class="side-B">
-						<div class="product-desc-side">
-							<h3><a href="{{url('motel-detail', $value->id)}}">Nhà Trọ: {{$value->name}}</a></h3> <br>
-							<h4><p style="background-color: #ff4157; border-radius: 30px; padding: 5px; margin-top: 5px;">
-								Giá Phòng: {{$value->price}}<b> Vnd
-								</p>
-							</h4> <br>  
-							<p><li>Diện Tích: {{$value->acreage}}</li></p>
-							<p><b><li>Địa Chỉ: {{$value->address}}</li></b></p>
-							<p><b><li>
-								<?php 
-	                            $date = date_create($value->created_at);
-	                            $d = date_format($date, 'd-m-Y');
-	                            $c = date_format($date, 'H:i');
-	                            ?>
-	                            Thời Gian Đăng: <br> Lúc {{$c}} Ngày {{$d}}
-							</li></b></p> <br>
+				</div>
+				<div class="side-B">
+					<div class="product-desc-side">
+						<h3><a href="{{url('motel-detail', $value->id)}}">Nhà Trọ: {{$value->name}}</a></h3> <br>
+						<h4><p style="background-color: #ff4157; border-radius: 30px; padding: 5px; margin-top: 5px;">
+							Giá Phòng: {{$value->price}}<b> Vnd
+							</p>
+						</h4> <br>  
+						<p><li>Diện Tích: {{$value->acreage}}</li></p>
+						<p><b><li>
+							<?php 
+							$date = date_create($value->created_at);
+							$d = date_format($date, 'd-m-Y');
+							$c = date_format($date, 'H:i');
+							?>
+							Thời Gian Đăng: <br> Lúc {{$c}} Ngày {{$d}}
+						</li></b></p> <br>
 							<!-- <div class="links">
 								<a href="" style="border-radius: 30px">Chi Tiết</a>
 								@if($value->status != 1)
@@ -300,16 +307,13 @@
 		</div>
 	</section>
 	<!-- end -->
+	@endsection
 
-	
-</section>
-@endsection
+	<script type="text/javascript">
 
-<script type="text/javascript">
-
-	$a = {!!$boardinghouse['lng']!!};
-	$b = {!!$boardinghouse['lat']!!};;
-	var mapObj = null;
+		$a = {!!$boardinghouse['lng']!!};
+		$b = {!!$boardinghouse['lat']!!};;
+		var mapObj = null;
     var defaultCoord = [10.045162, 105.746857]; // coord mặc định, 9 giữa Can tho
     var zoomLevel = 10;
     var mapConfig = {
@@ -332,7 +336,7 @@
         
         // tạo popup và gán vào marker vừa tạo
         var popup = L.popup();
-        popup.setContent("Vị trí nhà trọ: <b>{{$boardinghouse['name']}}</b> <br> {{$boardinghouse['address']}}");
+        popup.setContent("Vị trí nhà trọ: <b>{{$boardinghouse['name']}}</b> <br> {{$boardinghouse->number.', '.$street->name.', '.$wards->name.', '.$district->name.', '.$area->name}}");
         marker.bindPopup(popup);
     };
 </script>

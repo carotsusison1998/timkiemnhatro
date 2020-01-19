@@ -13,10 +13,11 @@
 			<p class="text-left">Chủ Nhà Trọ: 
 				<?php 
 				$owner = DB::table('Customer')->where('id', $boardinghouse->id_owner)->first();
-				?>{{$owner->first_name}} {{$owner->last_name}} <br>
+				?>
+				{{$owner->first_name}} {{$owner->last_name}} <br>
 			</p>
 			<p class="text-left">Số Điện Thoại: {{$owner->phone}}</p>
-			<p class="text-left">Giá Phòng: {{number_format($boardinghouse['price'])}} Vnd</p>
+			<p class="text-left">Giá Phòng: {{$boardinghouse['price']}} Vnd</p>
 
 			<h3><span>Thông Tin </span> Khách Hàng</h3>
 			<p class="text-left">Họ Và Tên: <span style="color: #ff4157">{{$customer->first_name}} {{$customer->last_name}}</span></p>

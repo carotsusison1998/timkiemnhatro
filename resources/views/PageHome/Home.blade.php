@@ -48,6 +48,7 @@
 
     .card .content p{
         font-size: 15px;
+        width: 100%;
     }
 
     .card .sliderText{
@@ -70,12 +71,31 @@
     .swiper-slide{
         width: 300px;
     }
+    .content a:hover{
+        font-size: 20px;
+        cursor: alias;
+    }
+    @media only screen and (max-width: 600px) {
+      .card{
+        width: 100%;
+        padding: 1px;
+      }
+      .sliderText p{
+        font-size: 12px;
+        color: white;
+      }
+      .card .content {
+        display: none
+      }
+
+     
+    }
 </style>
 
+
 <div class="swiper-container">
-    <h2 class="text-center">TOP SALES OF WEBSITE</h2>
     <div class="swiper-wrapper">
-        @foreach($top as $value)
+      @foreach($top as $value)
         <?php 
         $boarding = DB::table('boarding_house')->where('id', $value['id_boardinghouse'])->first();
         $owner = DB::table('customer')->where('id', $boarding->id_owner)->first();
@@ -83,7 +103,7 @@
         <div class="swiper-slide">
             <div class="card">
                 <div class="sliderText">
-                    <p>Nhà Trọ: </p><h3>{{$boarding->name}}</h3> <br> <br>
+                    <p>Nhà Trọ: <b>{{$boarding->name}}</b></p> <br> <br>
                     <img src="./resources/UploadImage/Image/{{$owner->image}}" alt="" width="10px" height="10px">
                 </div>
                 <div class="content">
@@ -95,8 +115,95 @@
             </div>
         </div>
         @endforeach
+        <div class="swiper-slide">
+            <div class="card">
+                <div class="sliderText">
+                    <p>Nhà Trọ: </p><h3></h3> <br> <br>
+                    <img src="" alt="" width="10px" height="10px">
+                </div>
+                <div class="content">
+                    <p>Chủ nhà trọ: </p>
+                    <p>Số điện thoại: </p>
+                    <p>Địa chỉ: </p>
+                    <a href="">Xem thêm</a>
+                </div>
+            </div>
+        </div>
+        <div class="swiper-slide">
+            <div class="card">
+                <div class="sliderText">
+                    <p>Nhà Trọ: </p><h3></h3> <br> <br>
+                    <img src="" alt="" width="10px" height="10px">
+                </div>
+                <div class="content">
+                    <p>Chủ nhà trọ: </p>
+                    <p>Số điện thoại: </p>
+                    <p>Địa chỉ: </p>
+                    <a href="">Xem thêm</a>
+                </div>
+            </div>
+        </div>
+        <div class="swiper-slide">
+            <div class="card">
+                <div class="sliderText">
+                    <p>Nhà Trọ: </p><h3></h3> <br> <br>
+                    <img src="" alt="" width="10px" height="10px">
+                </div>
+                <div class="content">
+                    <p>Chủ nhà trọ: </p>
+                    <p>Số điện thoại: </p>
+                    <p>Địa chỉ: </p>
+                    <a href="">Xem thêm</a>
+                </div>
+            </div>
+        </div>
+        <div class="swiper-slide">
+            <div class="card">
+                <div class="sliderText">
+                    <p>Nhà Trọ: </p><h3></h3> <br> <br>
+                    <img src="" alt="" width="10px" height="10px">
+                </div>
+                <div class="content">
+                    <p>Chủ nhà trọ: </p>
+                    <p>Số điện thoại: </p>
+                    <p>Địa chỉ: </p>
+                    <a href="">Xem thêm</a>
+                </div>
+            </div>
+        </div>
+        <div class="swiper-slide">
+            <div class="card">
+                <div class="sliderText">
+                    <p>Nhà Trọ: </p><h3></h3> <br> <br>
+                    <img src="" alt="" width="10px" height="10px">
+                </div>
+                <div class="content">
+                    <p>Chủ nhà trọ: </p>
+                    <p>Số điện thoại: </p>
+                    <p>Địa chỉ: </p>
+                    <a href="">Xem thêm</a>
+                </div>
+            </div>
+        </div>
+        <div class="swiper-slide">
+            <div class="card">
+                <div class="sliderText">
+                    <p>Nhà Trọ: </p><h3></h3> <br> <br>
+                    <img src="" alt="" width="10px" height="10px">
+                </div>
+                <div class="content">
+                    <p>Chủ nhà trọ: </p>
+                    <p>Số điện thoại: </p>
+                    <p>Địa chỉ: </p>
+                    <a href="">Xem thêm</a>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
+    <!-- Add Pagination -->
+  </div>
+
+  <!-- Swiper JS -->
 
 <!--gallery block--->
 <section class="gallery-block gallery-front">
@@ -194,8 +301,15 @@
                             Giá Phòng: <b>{{$value['price']}} Vnd
                             </p>
                         </h4> <br>  
-                        <p><li>Diện Tích: {{$value['acreage']}}m2</li></p>
-                        <p><b><li>Địa Chỉ: {{$value['address']}}</li></b></p>
+                        <p><li>Diện Tích: {{$value['acreage']}}</li></p>
+                        <?php 
+                            $street = DB::table('street')->where('id', $value['id_street'])->first();
+                            $wards = DB::table('wards')->where('id', $street->id_wards)->first();
+                            $district = DB::table('district')->where('id', $wards->id_district)->first();
+                            $area = DB::table('area')->where('id', $district->id_area)->first();
+                            // echo $area->name;
+                        ?>
+                        <p><b><li>Địa Chỉ: {{$value['number'].', '.$street->name.', '.$wards->name.', '.$district->name.', '.$area->name}}</li></b></p>
                         <p><b><li>
                             <?php 
                             $date = date_create($value['created_at']);
@@ -211,7 +325,11 @@
                                 <b title="phòng đã được đặt bởi người khác">Hết Phòng</b>
                             </button>
                             @elseif($value['status'] == 1)
-                            <a href="{{route('order-boardinghouse', $value['id'])}}" style="border-radius: 30px; background-color: #2FF95A">Đặt Phòng</a>
+                                @if(Auth::check())
+                                <a href="{{route('order-boardinghouse', $value['id'])}}" style="border-radius: 30px; background-color: #2FF95A">Đặt Phòng</a>
+                                @else
+                                <a href="{{route('order-boardinghouse', $value['id'])}}" title="Đăng nhập trước khi đặt phòng" style="border-radius: 30px; background-color: #2FF95A">Đặt Phòng</a>
+                                @endif
                             @endif
                         </div>
                     </div>
@@ -368,20 +486,17 @@
 </section>
 <script>
     var swiper = new Swiper('.swiper-container', {
-        effect: 'coverflow',
-        grabCursor: true,
-        centeredSlides: false,
-        slidesPerView: 'auto',
-        coverflowEffect: {
-            rotate: 30,
-            stretch: 0,
-            depth: 200,
-            modifier: 1,
-            slideShadows : true,
-        },
-        pagination: {
-            el: '.swiper-pagination',
-        },
+      slidesPerView: 4,
+      spaceBetween: 10,
+      freeMode: true,
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+      },
+      autoplay: {
+        delay: 4000,
+        disableOnInteraction: false,
+      },
     });
 </script>
 @endsection

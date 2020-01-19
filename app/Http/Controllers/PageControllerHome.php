@@ -20,7 +20,8 @@ class PageControllerHome extends Controller
     {
         $boardinghouse = BoardingHouse::orderBy('created_at', 'desc')->paginate(4);
         $top = Booking_Detail::select('id_boardinghouse')->get()->take(8);
-
+        $notice = App\Notifycations::InvoicePaid();
+        echo $notice;
 
         return view('PageHome.Home', compact('boardinghouse', 'top'));
     }
@@ -30,19 +31,10 @@ class PageControllerHome extends Controller
         $boardinghouse = BoardingHouse::where('id', $id)->first();
         $image = Image_BoardingHouse::where('id_boardinghouse', $id)->get();
         $comment = Comment_BoardingHouse::where('id_boardinghouse', $id)->get();
-        // 
-        $user = Auth::check();
-        $ids = Auth::user()['id'];
-        $customer = Customer::where('id_user',$ids)->first();
         $motelofid = DB::table('boarding_house')->where([
-            ['id_owner', '=', $customer['id']],
+            ['id_owner', '=', $boardinghouse['id_owner']],
             ['id', '<>', $id],
         ])->get();
-        // echo "<pre>";
-        // print_r($motelofid);
-        // echo "</pre>";
-
-        // 
         
         return view('PageMotel.GetMotelDetail', compact('boardinghouse', 'image', 'comment', 'motelofid'));
     }
@@ -70,7 +62,7 @@ class PageControllerHome extends Controller
             $price = $req->price;
             switch ($price) {
                case '1':
-               $boardinghouse = BoardingHouse::where('price', '>', '2000000')->orderBy('created_at', 'desc')->get();
+               $boardinghouse = BoardingHouse::where('price', '>=', 2000000)->orderBy('created_at', 'desc')->get();
                $price = "Loại trọ trên 2 triệu";
                break;
                case '2':
@@ -82,17 +74,12 @@ class PageControllerHome extends Controller
                $price = "Loại trọ dưới 1 triệu";
                break;
                case '4':
-               $boardinghouse = BoardingHouse::where('price', '<', '800000')->orderBy('created_at', 'desc')->get();
+               $boardinghouse = BoardingHouse::where('price', '<', 800000)->orderBy('created_at', 'desc')->get();
                $price = "Loại trọ dưới 800.000 ngàn";
                break;
-
-               default:
-                     # code...
-               break;
            }
-       }
+        }
         return view('PageMotel.GetMotelFilter', compact('boardinghouse', 'type_boardinghouse', 'price'));
-
    }
 
     public function GetContact()

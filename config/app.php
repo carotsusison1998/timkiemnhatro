@@ -174,7 +174,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Gloudemans\Shoppingcart\ShoppingcartServiceProvider::class,
-        
+        Botble\Assets\Providers\AssetsServiceProvider::class,
 
     ],
 
@@ -228,6 +228,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Cart' => Gloudemans\Shoppingcart\Facades\Cart::class,
         'Input' => Illuminate\Support\Facades\Input::class,
+        'Assets' => Botble\Assets\Facades\AssetsFacade::class,
     ],
 
 ];

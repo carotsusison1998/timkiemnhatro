@@ -31,8 +31,15 @@
 						<tr>
 							<td>{{$i++}}</td>
 							<td><a href="{{url('motel-detail', $b->id)}}">{{$b->name}}</a></td>
-							<td>{{number_format($values->price)}} Vnd</td>
-							<td>{{$b->address}}</td>
+							<td>{{$values->price}} Vnd</td>
+							<?php 
+							$street = DB::table('street')->where('id', $b->id_street)->first();
+							$wards = DB::table('wards')->where('id', $street->id_wards)->first();
+							$district = DB::table('district')->where('id', $wards->id_district)->first();
+							$area = DB::table('area')->where('id', $district->id_area)->first();
+                            // echo $area->name;
+							?>
+							<td>{{$b->number.', '.$street->name.', '.$wards->name.', '.$district->name.', '.$area->name}}</td>
 							<?php $phone = DB::table('Customer')->where('id', $b->id_owner)->first(); ?>
 							<td>{{$phone->phone}}</td>
 							<td>{{$phone->first_name}} {{$phone->last_name}}</td>

@@ -14,6 +14,8 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Area;
 use App\Type_BoardingHouse;
+use App\notifycations;
+use App\Customer;
 
 Route::get('', [
 	'as'=>'page-home',
@@ -304,3 +306,19 @@ Route::group(['prefix'=>''],function(){
 	
 });
 
+// Route::get('/notifycations', function(){
+// 	$user = Auth::check();
+// 	$id = Auth::user()['id'];
+// 	$customer = Customer::where('id_user',$id)->first();
+// 	$notify = notifycations::where('id_customer', $customer->id)->get();
+
+// 	echo "<pre>";
+// 	print_r($notify);
+// 	echo "</pre>";
+// });
+Route::group(['prefix'=>''],function(){
+	Route::get('notice/{id_customer}', [
+		'as' => 'notice',
+		'uses' => 'PageControllerNotifycations@GetNotice'
+	]);
+});

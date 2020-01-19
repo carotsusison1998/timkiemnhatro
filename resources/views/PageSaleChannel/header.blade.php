@@ -129,7 +129,6 @@
                 {{Session::get('thongbao')}}
             </div>
             @endif
-
             @if(Session::has('thongbaos'))
             <div class="alert alert-success">
                 {{Session::get('thongbaos')}}

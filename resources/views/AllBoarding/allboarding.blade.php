@@ -94,7 +94,7 @@
 					<div class="product-desc-side">
 						<h3><a href="{{url('motel-detail', $value['id'])}}">Nhà Trọ: {{$value['name']}}</a></h3> <br>
 						<h4><p style="background-color: #ff4157; border-radius: 30px; padding: 5px; margin-top: 5px;">
-							Giá Phòng: <b>{{number_format($value['price'])}} Vnd
+							Giá Phòng: <b>{{$value['price']}} Vnd
 							</p>
 						</h4> <br>  
 						<p><li>Diện Tích: {{$value['acreage']}}m2</li></p>

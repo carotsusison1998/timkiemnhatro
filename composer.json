@@ -9,10 +9,12 @@
     "license": "MIT",
     "require": {
         "php": "^7.2",
+        "botble/assets": "^1.0",
         "bumbummen99/shoppingcart": "^2.8",
         "fideloper/proxy": "^4.0",
         "illuminate/support": "^6.3",
         "laravel/framework": "^6.0",
+        "laravel/socialite": "^4.3",
         "laravel/tinker": "^1.0"
     },
     "require-dev": {
