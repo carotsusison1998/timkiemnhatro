@@ -71,7 +71,7 @@
 									<input type="hidden" name="_token" value="{{csrf_token()}}">
 									<input type="hidden" name="id_boar" value="{{$b->id}}">
 
-									<button class="btn btn-success">Hủy</button>
+									<button class="btn btn-success" disabled="">Hủy</button>
 								</form>
 								@elseif($b->status == 4)
 								<form action="{{route('confirm-boardinghouse4')}}" method="post" enctype="multipart/form-data">

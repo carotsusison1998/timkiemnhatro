@@ -123,13 +123,21 @@ class PageControllerSalesChannel extends Controller
         $booking_detail = Booking_Detail::where('id_boardinghouse', $id)->first();
         $booking = Booking::where('id', $booking_detail['id_booking'])->first();
         $customers = Customer::where('id', $booking['id_customer'])->first();
-        $notify = notifycations::where('id_customer', $customers->id)->get();
+        $notify = notifycations::where('id_customer', $customers['id'])->get();
 
-        echo "<pre>";
-        print_r($notify->toArray());
-        echo "</pre>";
+        // echo "<pre>";
+        // print_r($customers->toArray());
+        // echo "</pre>";
         
-        return view('PageSaleChannel.PageHomeSaleChannel.PageDetailBoardingHouse', compact('detail_boarding', 'customers'));
+        return view('PageSaleChannel.PageHomeSaleChannel.PageDetailBoardingHouse', compact('detail_boarding','booking', 'customers'));
+    }
+
+    public function Post_DateIn($id, Request $req)
+    {
+        $out = Booking::find($id);
+        $out->date_in = $req->date_in;
+        $out->save();
+        return redirect()->back();
     }
 
     public function DeleteBoardingHouse($id)
@@ -346,8 +354,7 @@ class PageControllerSalesChannel extends Controller
         $booking = Booking::where('id', $booking_detail->id_booking)->first();
         $boar->status = '3';
         $boar->save();
-
-        $text = "Phòng đã đươc xác nhận đặt thành công, vui lòng vào trang cá nhân để xem thông tin đầy đủ hơn";
+        $text = "Phòng đã đươc xác nhận đặt thành công";
         $notify = new notifycations;
         $notify->id_boardinghouse = $boar->id;
         $notify->id_customer = $booking->id_customer;
@@ -364,8 +371,16 @@ class PageControllerSalesChannel extends Controller
     public function PostConfirmBoardingHouse2(Request $req)
     {
         $boar = BoardingHouse::where('id', $req->id_boar)->first();
+        $booking_detail = Booking_Detail::where('id_boardinghouse', $boar->id)->first();
+        $booking = Booking::where('id', $booking_detail->id_booking)->first();
         $boar->status = '4';
         $boar->save();
+        $text = "Phòng đã đươc xác nhận hủy! vui lòng xem lại";
+        $notify = new notifycations;
+        $notify->id_boardinghouse = $boar->id;
+        $notify->id_customer = $booking->id_customer;
+        $notify->messages = $text;
+        $notify->save();
         return redirect()->back()->with('thongbao', 'Hủy thành công');
     }
     //hủy đặt phòng 
@@ -468,4 +483,6 @@ class PageControllerSalesChannel extends Controller
 
         return view('PageSaleChannel.PageProductChannel.PageHRMProduct', compact('product'));
     }
+
+
 }

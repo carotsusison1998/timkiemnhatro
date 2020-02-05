@@ -1,9 +1,3 @@
-
-<style>
-    #abc{
-        z-index: 111;
-    }
-</style>
 <div class="row" id="header">
     <div class="col-md-6">
                             <!--                            <a href="#"> </a>
@@ -60,7 +54,7 @@
                                             <li><a  data-hover="Trang Chủ" href="{{route('page-home')}}" class="active"><span>Trang Chủ</span></a></li>
                                             <li><a data-hover="Giới Thiệu"  href="{{route('page-about')}}"><span>Giới Thiệu</span></a></li>
                                             <li><a data-hover="Phòng Trọ"  href="{{route('motel-all')}}"><span>Phòng Trọ</span></a></li>
-                                            <li><a data-hover="Sản Phẩm"  href="{{route('product')}}"><span>Sản Phẩm</span></a></li>
+                                            <li><a data-hover="Nội Thất"  href="{{route('product')}}"><span>Nội Thất</span></a></li>
                                             <li><a data-hover="Liên Hệ" href="{{route('page-contact')}}"><span>Liên Hệ</span></a></li>
                                             <li><a data-hover="Giỏ Hàng" href="{{route('get-shopping-cart')}}"><span>Giỏ Hàng (0)</span></a></li>
                                         </ul>
@@ -156,17 +150,19 @@
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                             <h3 class="modal-title">Đăng Kí Kênh Bán Hàng</h3>
                         </div>
-                        <div class="modal-body">
+                        <div class="modal-body" id="nene">
                             <div class="container" style="margin-left: 150px">
                                 <form method="POST" action="{{route('sign-in-channel')}}" style="display: block" class="form-horizontal" enctype="multipart/form-data">
                                     <input type="hidden" name="_token" value="{{csrf_token()}}">
                                     <input type="hidden" name="id_customer" value="{{$customer['id']}}">
-                                    <div class="form-group">
+                                    <div class="form-group" id="form">
                                         <label for="">Tên: {{$customer['first_name']}} {{$customer['last_name']}}</label> <br>
                                         <label for="">Email: {{$customer['email']}}</label> <br>
+                                        <label for="">Tên Nhà Trọ Hoặc Tên Shop</label> <br>
+                                        <input type="text" class="form-control" placeholder="tên nhà trọ hoặc tên shop" name="name_channelsales">
                                     </div>
                                     <div class="form-group">
-                                        <button type="submit" class="btn btn-success">Đăng Kí</button>
+                                        <button type="submit" class="btn btn-successs">Đăng Kí</button>
                                     </div>
                                 </form>
 
@@ -201,7 +197,8 @@
                                 </div>
                                 <div class="form-group">
                                     <a href="" class="btn btn-success" id="tv">Hủy</a>
-                                    <button type="submit" class="btn btn-success">Đăng Nhập</button>
+                                    <button type="submit" class="btn btn-success">Đăng Nhập</button> <br> <br>
+                                    <a href="{{ url('/auth/redirect/facebook') }}" class="btn btn-danger">Login with facebook</a>
                                 </div>
                             </form>
 
@@ -217,12 +214,6 @@
     <!--end-->
     <div id="myCarousel1" class="carousel slide" data-ride="carousel"> 
         <!-- Indicators -->
-
-        <ol class="carousel-indicators">
-            <li data-target="#myCarousel1" data-slide-to="0" class="active"></li>
-            <li data-target="#myCarousel1" data-slide-to="1"></li>
-            <li data-target="#myCarousel1" data-slide-to="2"></li>
-        </ol>
         <div class="carousel-inner">
             <div class="item active"> <img src="{{asset('vacayhome/images/anh5.jpg')}}" style="width:100%; height: 500px; opacity: 0.8" alt="First slide">
                 <div class="carousel-caption" style=" margin-top: -35px">

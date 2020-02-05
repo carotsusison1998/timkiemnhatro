@@ -1,4 +1,4 @@
-@extends('PageLayoutForDetail.master')
+@extends('master')
 @section('content')
 <!--dinning-->
 <section class="blog">
@@ -92,14 +92,21 @@
 					</div>
 					<div class="side-B">
 						<div class="product-desc-side">
-							<h3><a href="{{url('motel-detail', $value['id'])}}">{{$value['name']}}</a></h3> <br>
-							<h4><p style=" border-radius: 30px; padding: 5px">
-								Giá Phòng: <b>{{number_format($value['price'])}} Vnd
-								</p>
-								<p style="background-color: #ff4157; border-radius: 30px; padding: 5px; margin-top: 5px;">
-								Giá Sales: <b>{{number_format($value['sale'])}} Vnd
+							<p class="name"><a href="{{url('product-detail', $value['id'])}}"><b>{{$value['name']}}</b></a></p> <br>
+							@if($value['sale'] == '0')
+							<h4><p style="background-color: #ff4157; margin-top: 8px; border-radius: 30px; padding: 5px">
+								Giá: <b>{{number_format($value['price'])}} Vnd
 								</p>
 							</h4> <br>  
+							@else
+							<h4><p style=" border-radius: 30px; padding: 5px; text-decoration: line-through;">
+								Giá: <b>{{number_format($value['price'])}} Vnd
+								</p>
+								<p style="background-color: #ff4157; border-radius: 30px; padding: 5px; margin-top: 5px;">
+								Giá Sale: <b>{{number_format($value['sale'])}} Vnd
+								</p>
+							</h4> <br> 
+							@endif 
 							<p><li>Diện Tích: 25m2</li></p>
 							<p><b><li>Địa Chỉ: {{$value['address']}}</li></b></p>
 							<p><b><li>

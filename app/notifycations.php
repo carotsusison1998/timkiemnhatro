@@ -6,6 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class notifycations extends Model
 {
-    public $timestamps = false;
-    
+	protected $table = 'notifycations';
+    public $timestamps = false;    
 }

@@ -10,12 +10,13 @@
     "require": {
         "php": "^7.2",
         "botble/assets": "^1.0",
-        "bumbummen99/shoppingcart": "^2.8",
+        "darryldecode/cart": "~4.0",
         "fideloper/proxy": "^4.0",
         "illuminate/support": "^6.3",
         "laravel/framework": "^6.0",
         "laravel/socialite": "^4.3",
-        "laravel/tinker": "^1.0"
+        "laravel/tinker": "^1.0",
+        "laravel/ui": "^1.1"
     },
     "require-dev": {
         "facade/ignition": "^1.4",

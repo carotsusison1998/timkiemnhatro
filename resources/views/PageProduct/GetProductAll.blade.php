@@ -93,16 +93,27 @@
 					</div>
 					<div class="side-B">
 						<div class="product-desc-side">
-							<h3><a href="{{url('motel-detail', $value['id'])}}">Nhà Trọ: {{$value['name']}}</a></h3> <br>
-							<h4><p style=" border-radius: 30px; padding: 5px">
-								Giá Phòng: <b>{{number_format($value['price'])}} Vnd
-								</p>
-								<p style="background-color: #ff4157; border-radius: 30px; padding: 5px; margin-top: 5px;">
-								Giá Sales: <b>{{number_format($value['sale'])}} Vnd
+							<p class="name"><a href="{{url('product-detail', $value['id'])}}"><b>{{$value['name']}}</b></a></p> <br>
+							@if($value['sale'] == '0')
+							<h4><p style="background-color: #ff4157; margin-top: 8px; border-radius: 30px; padding: 5px">
+								Giá: <b>{{number_format($value['price'])}} Vnd
 								</p>
 							</h4> <br>  
-							<p><li>Diện Tích: 25m2</li></p>
-							<p><b><li>Địa Chỉ: {{$value['address']}}</li></b></p>
+							@else
+							<h4><p style=" border-radius: 30px; padding: 5px; text-decoration: line-through;">
+								Giá: <b>{{number_format($value['price'])}} Vnd
+								</p>
+								<p style="background-color: #ff4157; border-radius: 30px; padding: 5px; margin-top: 5px;">
+								Giá Sale: <b>{{number_format($value['sale'])}} Vnd
+								</p>
+							</h4> <br> 
+							@endif
+							<p><li>Nơi Sản Xuất: {{$value['production']}}</li></p>
+							<?php 
+								$address = DB::table('customer')->where('id', $value['id_customer'])->first();
+
+							?>
+							<p><b><li>Địa Chỉ: {{$address->address}}</li></b></p>
 							<p><b><li>
 								<?php 
 								$date = date_create($value['created_at']);
@@ -113,6 +124,7 @@
 							</li></b></p> <br>
 							<div class="links">
 								<a href="{{url('motel-detail', $value['id'])}}" style="border-radius: 30px">Chi Tiết</a>
+								<a href="" id="carts2"></i>Mua Ngay</a>
 							</div>
 						</div>
 					</div>

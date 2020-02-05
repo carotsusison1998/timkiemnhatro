@@ -23,7 +23,7 @@
 			@foreach($product as $value)
 			<tr>
 				<td>{{$i++}}</td>
-				<td><a href="">{{$value['name']}}</a></td>
+				<td><a href="{{route('detail-product', $value->id)}}">{{$value['name']}}</a></td>
 				<td>{{number_format($value['price'])}} Vnd</td>
 				@if($value['sale'] == 0)
 				<td>chưa khuyên mãi</td>
@@ -33,7 +33,7 @@
 				<?php $type = DB::table('Type_Product')->where('id', $value['id_typeproduct'])->first(); ?>
 				<td>{{$type->name}}</td>
 				<td>
-					<a href="">Sửa</a>
+					<a href="{{route('product-update', $value->id)}}">Sửa</a>
 					<a href="" style="margin-left: 10px">Xóa</a>
 				</td>
 			</tr>

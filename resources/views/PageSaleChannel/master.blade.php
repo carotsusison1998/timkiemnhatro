@@ -10,6 +10,7 @@
 	<link href="../vacayhome/fonts/antonio-exotic/stylesheet.css" rel="stylesheet">
 	<link href="../vacayhome/css/lightbox.min.css" rel="stylesheet">
 	<link href="../vacayhome/css/responsive.css" rel="stylesheet">
+	<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
 	<script src="../vacayhome/js/jquery.min.js" type="text/javascript"></script>
 	<script src="../vacayhome/js/bootstrap.min.js" type="text/javascript"></script>
 	<script src="../vacayhome/js/lightbox-plus-jquery.min.js" type="text/javascript"></script>
@@ -20,9 +21,7 @@
 	<style>
         body{
     		background-color: #f1f1f1;
-            
         }
-        
     </style>
 </head>
 <body>
@@ -54,6 +53,7 @@
 	</div>
 </body>
 </html>
+<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 <script>
     $("div.alert").delay(3000).slideUp();
 </script>

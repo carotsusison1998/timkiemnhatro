@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Auth;
 use App\Customer;
+use App\notifycations;
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -24,6 +25,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+
         view()->composer('header', function($view){
             $user = Auth::check();
             $id = Auth::user()['id'];
@@ -80,6 +82,27 @@ class AppServiceProvider extends ServiceProvider
         });
 
         view()->composer('PageSaleChannel.PageProductChannel.PageInsertProduct', function($view){
+            $user = Auth::check();
+            $id = Auth::user()['id'];
+            $customer = Customer::where('id_user',$id)->first();
+            $view->with('customer', $customer);
+        });
+
+        view()->composer('PageSaleChannel.PageProductChannel.PageDetailProduct', function($view){
+            $user = Auth::check();
+            $id = Auth::user()['id'];
+            $customer = Customer::where('id_user',$id)->first();
+            $view->with('customer', $customer);
+        });
+
+        view()->composer('PageSaleChannel.PageProductChannel.PageUpdateProduct', function($view){
+            $user = Auth::check();
+            $id = Auth::user()['id'];
+            $customer = Customer::where('id_user',$id)->first();
+            $view->with('customer', $customer);
+        });
+
+        view()->composer('PageProduct.GetProductDetail', function($view){
             $user = Auth::check();
             $id = Auth::user()['id'];
             $customer = Customer::where('id_user',$id)->first();

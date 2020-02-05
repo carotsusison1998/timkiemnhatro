@@ -35,7 +35,7 @@ License URI: http://www.themevault.net/license/-->
     <style>
         body{
             background-color: #f1f1f1;
-            
+            font-family: "montserrat", sans-serif;
         }
     </style>
 </head>
@@ -60,6 +60,9 @@ License URI: http://www.themevault.net/license/-->
             </div>
         </div>
     </div>
+    <script>
+        $("div.alert").delay(3000).slideUp();
+    </script>
 </body>
 </html>
 

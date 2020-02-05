@@ -50,11 +50,14 @@
 				<td>{{$data->name}}</td>
 				<td>
 					@if($value['status'] == 4 || $value['status'] == 3 || $value['status'] == 2)
-					<a href="{{route('update-boardinghousee', $value['id'])}}"><button class="btn btn-info" disabled="" style="color: black">Sửa </button></a>
+					<a href="{{route('update-boardinghousee', $value['id'])}}"><button class="btn btn-info"  style="color: black">Sửa </button></a>
+					<a href="{{route('delete-boardinghouse', $value['id'])}}"><button class="btn btn-warning">Xóa</button></a>
+
 					@else
 					<a href="{{route('update-boardinghousee', $value['id'])}}"><button class="btn btn-info" style="color: black">Sửa</button></a>
-					@endif
 					<a href="{{route('delete-boardinghouse', $value['id'])}}"><button class="btn btn-warning">Xóa</button></a>
+
+					@endif
 				</td>
 				@if($value['status'] == 0)
 				<td>Hết phòng</td>

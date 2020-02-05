@@ -101,7 +101,14 @@
 								</p>
 							</h4> <br>  
 							<p><li>Diện Tích: 25m2</li></p>
-							<p><b><li>Địa Chỉ: {{$value['address']}}</li></b></p>
+							<?php 
+							$street = DB::table('street')->where('id', $value->id_street)->first();
+							$wards = DB::table('wards')->where('id', $street->id_wards)->first();
+							$district = DB::table('district')->where('id', $wards->id_district)->first();
+							$area = DB::table('area')->where('id', $district->id_area)->first();
+								// echo $wards->name;
+							?>
+							<p><b><li>Địa Chỉ: {{$value->number.', '.$street->name.', '.$wards->name.', '.$district->name.', '.$area->name}}</li></b></p>
 							<p><b><li>
 								<?php 
 								$date = date_create($value['created_at']);

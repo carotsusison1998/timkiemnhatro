@@ -6,7 +6,6 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use App\notifycations;
 
 class InvoicePaid extends Notification
 {
@@ -42,9 +41,9 @@ class InvoicePaid extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-        ->line('The introduction to the notification.')
-        ->action('Notification Action', url('/'))
-        ->line('Thank you for using our application!');
+                    ->line('The introduction to the notification.')
+                    ->action('Notification Action', url('/'))
+                    ->line('Thank you for using our application!');
     }
 
     public function toDatabase($value='')
@@ -65,15 +64,5 @@ class InvoicePaid extends Notification
         return [
             //
         ];
-    }
-    public function Notice($value='')
-    {
-        $user = Auth::check();
-        $id = Auth::user()['id'];
-        $customer = Customer::where('id_user',$id)->first();
-        $notifycations = notifycations::where('id_customer', $customer->id)->get();
-        echo "<pre>";
-        print_r($notifycations->toArray());
-        echo "</pre>";
     }
 }

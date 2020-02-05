@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Comment_Product extends Model
 {
-    protected $table = "commnent_product";
+    protected $table = "comment_product";
     public $timestamps = false;
 
     public function product()

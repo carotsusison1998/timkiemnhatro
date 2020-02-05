@@ -1,4 +1,4 @@
-@extends('PageLayoutForDetail.master')
+@extends('master')
 @section('content')
 <section>
 	<div class="container">

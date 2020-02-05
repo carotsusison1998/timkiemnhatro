@@ -101,6 +101,7 @@
 				<span><li>Họ và tên: <b>{{$customers->first_name.' '.$customers->last_name}}</b></li></span>
 				<span><li>Số điện thoại: <b>{{$customers->phone}}</b></li></span>
 				<span><li>Email: <b>{{$customers->email}}</b></li></span>
+				<span><li>Thời gian đặt: <b>{{$booking->created_at}}</b></li></span>
 			</div>
 			@else
 			<div class="col-sm-12">
@@ -131,9 +132,19 @@
 				@elseif($detail_boarding['status'] == 3)
 				<div class="col-sm-12 cl">
 					<span><li>Phòng đã được đặt thành công</li></span>
-						<span><li>Họ và tên: <b>{{$customers->first_name.' '.$customers->last_name}}</b></li></span>
-						<span><li>Số điện thoại: <b>{{$customers->phone}}</b></li></span>
-						<span><li>Email: <b>{{$customers->email}}</b></li></span>
+					<span><li>Họ và tên: <b>{{$customers->first_name.' '.$customers->last_name}}</b></li></span>
+					<span><li>Số điện thoại: <b>{{$customers->phone}}</b></li></span>
+					<span><li>Email: <b>{{$customers->email}}</b></li></span>
+					
+					@if($booking->date_in === "0000-00-00")
+					<form action="{{route('date-in', $booking->id)}}" method="post">
+						{{csrf_field()}}
+						<input type="date" name="date_in" placeholder="nhập ngày vào ở">
+						<button>Lưu</button>
+					</form>
+					@else
+					<span><li>Ngày vào phòng: {{date_format(date_create($booking->date_in), "d/m/Y")}}</li></span>
+					@endif
 				</div>
 				@elseif($detail_boarding['status'] == 4)
 				<h3 class="text-center">Phòng được hủy</h3>

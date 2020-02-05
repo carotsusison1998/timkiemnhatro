@@ -91,6 +91,17 @@ Route::group(['prefix'=>''],function(){
 		'as'=>'product-detail',
 		'uses' =>'PageControllerProduct@GetProductDetail'
 	]);
+
+	Route::post('comment-product/{id_product}',[
+		'as'=> 'comment-product',
+		'uses'=> 'PageControllerProduct@CommentProduct'
+	]);
+
+	Route::post('repcomment-product/{id_comment}',[
+		'as'=> 'repcomment-product',
+		'uses'=> 'PageControllerProduct@RepCommentProduct'
+	]);
+
 });
 
 Route::group(['prefix'=>''],function(){
@@ -146,7 +157,7 @@ Route::group(['prefix'=>''],function(){
 		'uses' =>'PageControllerShoppingCart@GetOrderBoar'
 	]);
 });
-
+// sales channel
 Route::group(['prefix'=>''],function(){
 	Route::get('sales-channel/{id?}', [
 		'as'=>'sales-channel',
@@ -213,8 +224,13 @@ Route::group(['prefix'=>''],function(){
 		'uses' =>'PageControllerSalesChannel@PostConfirmBoardingHouse4'
 	]);
 
-});
+	Route::post('date-in/{id?}', [
+		'as'=>'date-in',
+		'uses' =>'PageControllerSalesChannel@Post_DateIn'
+	]);
 
+});
+// sales channel
 Route::group(['prefix'=>''],function(){
 	Route::get('insert-product', [
 		'as'=>'insert-product',
@@ -229,6 +245,25 @@ Route::group(['prefix'=>''],function(){
 	Route::post('insert-product',[
 		'as' => 'insert-product',
 		'uses' => 'PageControllerSalesChannel@PostInsertProduct'
+	]);
+	Route::get('detail-product/{id}', [
+		'as'=> 'detail-product',
+		'uses'=> 'PageControllerProduct@DetailProduct'
+	]);
+
+	Route::get('product-update/{id?}', [
+		'as'=>'product-update',
+		'uses' =>'PageControllerProduct@GetProductUpdate'
+	]);
+
+	Route::get('delete-image/{id?}', [
+		'as'=>'delete-image',
+		'uses' =>'PageControllerProduct@DeleteImage'
+	]);
+
+	Route::post('product-update/{id?}',[
+		'as'=>'product-update',
+		'uses' =>'PageControllerProduct@PostProductUpdate'
 	]);
 });
 
@@ -303,6 +338,12 @@ Route::group(['prefix'=>''],function(){
 		'uses' => 'PageControllerAjax@GetMoney'
 	]);
 
+	Route::get('checknumber', [
+		'as' => 'checknumber',
+		'uses' => 'PageControllerAjax@CheckNumber'
+	]);
+
+
 	
 });
 
@@ -321,4 +362,17 @@ Route::group(['prefix'=>''],function(){
 		'as' => 'notice',
 		'uses' => 'PageControllerNotifycations@GetNotice'
 	]);
+
+	Route::get('remove-notice/{id_notice}', [
+		'as' => 'removenotice',
+		'uses' => 'PageControllerNotifycations@RemoveNotice'
+	]);
 });
+
+
+// do not touch
+Auth::routes();
+Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/auth/redirect/{provider}', 'LoginFacebook@redirect');
+Route::get('/callback/{provider}', 'LoginFacebook@callback');
+// 

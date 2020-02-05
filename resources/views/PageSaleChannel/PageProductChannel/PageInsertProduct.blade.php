@@ -3,7 +3,7 @@
 <section>
 	<h2 class="text-center">Trang Thêm Sản Phẩm</h2>
 	<div class="clearfix"><br></div>
-	<a href="{{route('hrm-product')}}"><button class="btn btn-success"><b>Trở về</b></button></a>
+	<a href="{{route('hrm-product', $customer['id'])}}"><button class="btn btn-success"><b>Trở về</b></button></a>
 	<div class="clearfix"><br></div>
 	@if(Session::has('thongbao'))
 	<div class="alert alert-success">

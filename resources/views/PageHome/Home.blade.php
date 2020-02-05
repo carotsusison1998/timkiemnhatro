@@ -1,209 +1,55 @@
 @extends('master')
 @section('content')
-<style>
-    .container h2{
-        text-align: center;
-        padding-bottom: 20px;
-        font-family: "montserrat", sans-serif;
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
-        text-shadow:  2px 2px 10px #cc0000;
-        font-weight: bolder;
-    }
-    h3{
-        text-align: center;
-        text-transform: uppercase;
-        text-shadow: 2px 2px 2px #00ff00;
-        margin-bottom: 20px;
-    }
-
-
-    .card{
-        position: relative;
-        background: #fff;
-        width: 300px;
-        height: 300px;
-        margin: 0 auto;
-    }
-
-    .card .content{
-        width: 300px;
-        padding: 30px;
-        box-sizing: border-box;
-    }
-    .card .content a{
-        display: inline-block;
-        margin: 10px 0 0;
-        padding: 10px 20px;
-        text-decoration: none;
-        border: 2px solid #262626;
-        color: #262626;
-        font-weight: 600;
-    }
-
-    .card .content a:hover{
-        background: #665A5A;
-        color: white
-    }
-
-    .card .content p{
-        font-size: 15px;
-        width: 100%;
-    }
-
-    .card .sliderText{
-        position: relative;
-        width: 100%;
-        height: 100px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background: #000;
-    }
-    .card .sliderText h3{
-        color: #fff;
-        font-size: 2em;
-    }
-
-    .card .sliderText p{
-        color: #fff;
-    }
-    .swiper-slide{
-        width: 300px;
-    }
-    .content a:hover{
-        font-size: 20px;
-        cursor: alias;
-    }
-    @media only screen and (max-width: 600px) {
-      .card{
-        width: 100%;
-        padding: 1px;
-      }
-      .sliderText p{
-        font-size: 12px;
-        color: white;
-      }
-      .card .content {
-        display: none
-      }
-
-     
-    }
-</style>
-
+<div class="container" id="notice">
+    <div class="row">
+        @foreach($notifycations as $value)
+        <div class="col-sm-6 col-md-6">
+            <div class="alert alert-success">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+                ×</button>
+                <?php 
+                $boardinghouses = DB::table('boarding_house')->where('id', $value['id_boardinghouse'])->first();
+                ?>
+                <span class="glyphicon glyphicon-ok"></span> Nhà trọ: <strong>{{$boardinghouses->name}}</strong>
+                <hr>
+                <p>{{$value['messages']}}</p>
+            </div>
+        </div>
+        @endforeach
+    </div>
+</div>
 
 <div class="swiper-container">
     <div class="swiper-wrapper">
       @foreach($top as $value)
-        <?php 
+      <?php 
         $boarding = DB::table('boarding_house')->where('id', $value['id_boardinghouse'])->first();
+        $shop = DB::table('sales_channel')->where('id_customer', $boarding->id_owner)->first();
+        // echo "<pre>";
+        // print_r($shop);
+        // echo "</pre>";
         $owner = DB::table('customer')->where('id', $boarding->id_owner)->first();
-        ?>
-        <div class="swiper-slide">
-            <div class="card">
-                <div class="sliderText">
-                    <p>Nhà Trọ: <b>{{$boarding->name}}</b></p> <br> <br>
-                    <img src="./resources/UploadImage/Image/{{$owner->image}}" alt="" width="10px" height="10px">
-                </div>
-                <div class="content">
-                    <p>Chủ nhà trọ: {{$owner->first_name}} {{$owner->last_name}}</p>
-                    <p>Số điện thoại: {{$owner->phone}}</p>
-                    <p>Địa chỉ: {{$owner->address}}</p>
-                    <a href="{{route('all-motel', $owner->id)}}">Xem thêm</a>
-                </div>
+      ?>
+      <div class="swiper-slide">
+        <div class="card">
+            <div class="sliderText" id="toop">
+                <p><b>Kênh: {{$shop->name_channelsales}}</b></p> <br> <br>
             </div>
-        </div>
-        @endforeach
-        <div class="swiper-slide">
-            <div class="card">
-                <div class="sliderText">
-                    <p>Nhà Trọ: </p><h3></h3> <br> <br>
-                    <img src="" alt="" width="10px" height="10px">
-                </div>
-                <div class="content">
-                    <p>Chủ nhà trọ: </p>
-                    <p>Số điện thoại: </p>
-                    <p>Địa chỉ: </p>
-                    <a href="">Xem thêm</a>
-                </div>
-            </div>
-        </div>
-        <div class="swiper-slide">
-            <div class="card">
-                <div class="sliderText">
-                    <p>Nhà Trọ: </p><h3></h3> <br> <br>
-                    <img src="" alt="" width="10px" height="10px">
-                </div>
-                <div class="content">
-                    <p>Chủ nhà trọ: </p>
-                    <p>Số điện thoại: </p>
-                    <p>Địa chỉ: </p>
-                    <a href="">Xem thêm</a>
-                </div>
-            </div>
-        </div>
-        <div class="swiper-slide">
-            <div class="card">
-                <div class="sliderText">
-                    <p>Nhà Trọ: </p><h3></h3> <br> <br>
-                    <img src="" alt="" width="10px" height="10px">
-                </div>
-                <div class="content">
-                    <p>Chủ nhà trọ: </p>
-                    <p>Số điện thoại: </p>
-                    <p>Địa chỉ: </p>
-                    <a href="">Xem thêm</a>
-                </div>
-            </div>
-        </div>
-        <div class="swiper-slide">
-            <div class="card">
-                <div class="sliderText">
-                    <p>Nhà Trọ: </p><h3></h3> <br> <br>
-                    <img src="" alt="" width="10px" height="10px">
-                </div>
-                <div class="content">
-                    <p>Chủ nhà trọ: </p>
-                    <p>Số điện thoại: </p>
-                    <p>Địa chỉ: </p>
-                    <a href="">Xem thêm</a>
-                </div>
-            </div>
-        </div>
-        <div class="swiper-slide">
-            <div class="card">
-                <div class="sliderText">
-                    <p>Nhà Trọ: </p><h3></h3> <br> <br>
-                    <img src="" alt="" width="10px" height="10px">
-                </div>
-                <div class="content">
-                    <p>Chủ nhà trọ: </p>
-                    <p>Số điện thoại: </p>
-                    <p>Địa chỉ: </p>
-                    <a href="">Xem thêm</a>
-                </div>
-            </div>
-        </div>
-        <div class="swiper-slide">
-            <div class="card">
-                <div class="sliderText">
-                    <p>Nhà Trọ: </p><h3></h3> <br> <br>
-                    <img src="" alt="" width="10px" height="10px">
-                </div>
-                <div class="content">
-                    <p>Chủ nhà trọ: </p>
-                    <p>Số điện thoại: </p>
-                    <p>Địa chỉ: </p>
-                    <a href="">Xem thêm</a>
-                </div>
+            <div class="content">
+                <p>Chủ nhà trọ: {{$owner->first_name}} {{$owner->last_name}}</p>
+                <p>Số điện thoại: {{$owner->phone}}</p>
+                
+                <p>Địa chỉ: {{$owner->address}}</p>
+                <a href="{{route('all-motel', $owner->id)}}">Xem thêm</a>
             </div>
         </div>
     </div>
-    <!-- Add Pagination -->
-  </div>
+    @endforeach
+</div>
+<!-- Add Pagination -->
+</div>
 
-  <!-- Swiper JS -->
+<!-- Swiper JS -->
 
 <!--gallery block--->
 <section class="gallery-block gallery-front">
@@ -303,10 +149,10 @@
                         </h4> <br>  
                         <p><li>Diện Tích: {{$value['acreage']}}</li></p>
                         <?php 
-                            $street = DB::table('street')->where('id', $value['id_street'])->first();
-                            $wards = DB::table('wards')->where('id', $street->id_wards)->first();
-                            $district = DB::table('district')->where('id', $wards->id_district)->first();
-                            $area = DB::table('area')->where('id', $district->id_area)->first();
+                        $street = DB::table('street')->where('id', $value['id_street'])->first();
+                        $wards = DB::table('wards')->where('id', $street->id_wards)->first();
+                        $district = DB::table('district')->where('id', $wards->id_district)->first();
+                        $area = DB::table('area')->where('id', $district->id_area)->first();
                             // echo $area->name;
                         ?>
                         <p><b><li>Địa Chỉ: {{$value['number'].', '.$street->name.', '.$wards->name.', '.$district->name.', '.$area->name}}</li></b></p>
@@ -325,11 +171,11 @@
                                 <b title="phòng đã được đặt bởi người khác">Hết Phòng</b>
                             </button>
                             @elseif($value['status'] == 1)
-                                @if(Auth::check())
-                                <a href="{{route('order-boardinghouse', $value['id'])}}" style="border-radius: 30px; background-color: #2FF95A">Đặt Phòng</a>
-                                @else
-                                <a href="{{route('order-boardinghouse', $value['id'])}}" title="Đăng nhập trước khi đặt phòng" style="border-radius: 30px; background-color: #2FF95A">Đặt Phòng</a>
-                                @endif
+                            @if(Auth::check())
+                            <a href="{{route('order-boardinghouse', $value['id'])}}" style="border-radius: 30px; background-color: #2FF95A">Đặt Phòng</a>
+                            @else
+                            <a href="{{route('order-boardinghouse', $value['id'])}}" title="Đăng nhập trước khi đặt phòng" style="border-radius: 30px; background-color: #2FF95A">Đặt Phòng</a>
+                            @endif
                             @endif
                         </div>
                     </div>
@@ -492,11 +338,13 @@
       pagination: {
         el: '.swiper-pagination',
         clickable: true,
-      },
-      autoplay: {
+    },
+    autoplay: {
         delay: 4000,
         disableOnInteraction: false,
-      },
-    });
+    },
+});
+
+    $("div.alert").delay(3000).slideUp();
 </script>
 @endsection

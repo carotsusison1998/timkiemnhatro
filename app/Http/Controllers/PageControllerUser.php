@@ -170,9 +170,21 @@ class PageControllerUser extends Controller
 
     public function PostSigninChannel(Request $req)
     {
+        $this->validate($req, 
+                [
+                    'name_channelsales' => 'required'
+                ],
+                [
+                    'name_channelsales.required' => 'Vui lòng điền tên trọ hoặc tên shop',
+                ]);
+
         $sales_channel = new Sales_Channel;
         $sales_channel->id_customer = $req->id_customer;
+        $sales_channel->name_channelsales = $req->name_channelsales;
+        // echo "<pre>";
+        // print_r($sales_channel->toArray());
+        // echo "</pre>";
         $sales_channel->save();
-        return redirect()->back()->with('thongbaos', 'Đăng kí kênh bán hàng thành công');
+        return redirect()->back()->with('thongbaos', 'Đăng kí kênh quản lí thành công');
     }
 }
