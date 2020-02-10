@@ -24,60 +24,6 @@
 						<li><a href="{{route('motel-filter', 'price=4')}}"><i class="fa fa-caret-right"> </i>Nhà Trọ Dưới 800 Triệu</a></li>
 					</ul>
 				</div>
-				<div class="blog-list1">
-					<h4>Popular Posts</h4>
-					<div class="blog-list-top">
-						<div class="blog-img">
-							<a><img class="img-responsive" src="../public/vacayhome/images/icons/car.png" alt=""></a>
-						</div>
-						<div class="blog-text">
-							<p><a>Lorem ipsum dolor sit amet, consectetuer</a></p>
-							<span class="link">
-								Sep 14, 2016
-							</span>
-						</div>
-						<div class="clearfix"> </div>
-					</div>
-
-					<div class="blog-list-top">
-						<div class="blog-img">
-							<a><img class="img-responsive" src="../public/vacayhome/images/icons/car.png" alt=""></a>
-						</div>
-						<div class="blog-text">
-							<p><a>Lorem ipsum dolor sit amet, consectetuer</a></p>
-							<span class="link">
-								Sep 14, 2016
-							</span>
-						</div>
-						<div class="clearfix"> </div>
-					</div>
-
-					<div class="blog-list-top">
-						<div class="blog-img">
-							<a><img class="img-responsive" src="../public/vacayhome/images/icons/car.png" alt=""></a>
-						</div>
-						<div class="blog-text">
-							<p><a>Lorem ipsum dolor sit amet, consectetuer</a></p>
-							<span class="link">
-								Sep 14, 2016
-							</span>
-						</div>
-						<div class="clearfix"> </div>
-					</div>
-
-					<div class="blog-list-top">
-						<div class="blog-img">
-							<a><img class="img-responsive" src="../public/vacayhome/images/icons/car.png" alt=""></a>
-						</div>
-						<div class="blog-text">
-							<p><a>Lorem ipsum dolor sit amet, consectetuer</a></p>
-							<span class="link">
-								Sep 14, 2016
-							</span>
-						</div>
-						<div class="clearfix"> </div>
-					</div>
-				</div>
 			</aside>
 			<div class="col-md-9 col-sm-12 col-xs-12">
 				<h3 class="text-center" style="text-transform: uppercase;">{{$nametype_boardinghouse->name}}</h3>

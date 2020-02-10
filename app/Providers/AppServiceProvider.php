@@ -3,7 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Auth;
+use Auth, Cart;
 use App\Customer;
 use App\notifycations;
 class AppServiceProvider extends ServiceProvider
@@ -30,7 +30,8 @@ class AppServiceProvider extends ServiceProvider
             $user = Auth::check();
             $id = Auth::user()['id'];
             $customer = Customer::where('id_user',$id)->first();
-            $view->with('customer', $customer);
+            $cart = count(Cart::getContent());
+            $view->with(['customer' => $customer, 'cart' => $cart]);
         });
 
         view()->composer('PageSaleChannel.header', function($view){
@@ -103,6 +104,13 @@ class AppServiceProvider extends ServiceProvider
         });
 
         view()->composer('PageProduct.GetProductDetail', function($view){
+            $user = Auth::check();
+            $id = Auth::user()['id'];
+            $customer = Customer::where('id_user',$id)->first();
+            $view->with('customer', $customer);
+        });
+
+        view()->composer('PageCart.GetShoppingCart', function($view){
             $user = Auth::check();
             $id = Auth::user()['id'];
             $customer = Customer::where('id_user',$id)->first();

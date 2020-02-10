@@ -1,5 +1,13 @@
 @extends('master')
 @section('content')
+<style>
+	.product-desc-side {
+	    font-size: 14px;
+	    letter-spacing: 0.5px;
+	    line-height: 15px;
+	    text-align: left;
+	}
+</style>
 <!--dinning-->
 <section class="blog">
 	<div class="container">
@@ -15,71 +23,11 @@
 
 					<div class="clearfix"> </div>
 				</div>
-				<div class="blog-list">
-					<h4>BỘ LỌC</h4>
-					<ul>
-						<li><a href="{{route('motel-filter', 'price=1')}}"><i class="fa fa-caret-right"> </i>Nhà Trọ Trên 2 Triệu</a></li>
-						<li><a href="{{route('motel-filter', 'price=2')}}"><i class="fa fa-caret-right"> </i>Nhà Trọ 1 Triệu Đến 2 Triệu</a></li>
-						<li><a href="{{route('motel-filter', 'price=3')}}"><i class="fa fa-caret-right"> </i>Nhà Trọ Dưới 1 Triệu</a></li>
-						<li><a href="{{route('motel-filter', 'price=4')}}"><i class="fa fa-caret-right"> </i>Nhà Trọ Dưới 800 Triệu</a></li>
-					</ul>
-				</div>
-				<div class="blog-list1">
-					<h4>Popular Posts</h4>
-					<div class="blog-list-top">
-						<div class="blog-img">
-							<a><img class="img-responsive" src="../public/vacayhome/images/icons/car.png" alt=""></a>
-						</div>
-						<div class="blog-text">
-							<p><a>Lorem ipsum dolor sit amet, consectetuer</a></p>
-							<span class="link">
-								Sep 14, 2016
-							</span>
-						</div>
-						<div class="clearfix"> </div>
-					</div>
-
-					<div class="blog-list-top">
-						<div class="blog-img">
-							<a><img class="img-responsive" src="../public/vacayhome/images/icons/car.png" alt=""></a>
-						</div>
-						<div class="blog-text">
-							<p><a>Lorem ipsum dolor sit amet, consectetuer</a></p>
-							<span class="link">
-								Sep 14, 2016
-							</span>
-						</div>
-						<div class="clearfix"> </div>
-					</div>
-
-					<div class="blog-list-top">
-						<div class="blog-img">
-							<a><img class="img-responsive" src="../public/vacayhome/images/icons/car.png" alt=""></a>
-						</div>
-						<div class="blog-text">
-							<p><a>Lorem ipsum dolor sit amet, consectetuer</a></p>
-							<span class="link">
-								Sep 14, 2016
-							</span>
-						</div>
-						<div class="clearfix"> </div>
-					</div>
-
-					<div class="blog-list-top">
-						<div class="blog-img">
-							<a><img class="img-responsive" src="../public/vacayhome/images/icons/car.png" alt=""></a>
-						</div>
-						<div class="blog-text">
-							<p><a>Lorem ipsum dolor sit amet, consectetuer</a></p>
-							<span class="link">
-								Sep 14, 2016
-							</span>
-						</div>
-						<div class="clearfix"> </div>
-					</div>
-				</div>
 			</aside>
-			<div class="col-md-9 col-sm-12 col-xs-12">
+			<div class="col-md-9 col-sm-12 col-xs-12" style=" padding-top: 10px">
+				<input type="text" class="form-control" style="border-radius: 10px; height: 40px;" id="search" placeholder="Tìm kiếm......">
+			</div>
+			<div class="col-md-9 col-sm-12 col-xs-12" id="show">
 				@foreach($product as $value)
 				<div class="col-md-9 col-sm-12 col-xs-12 remove-padd-left" style="padding-top: 20px">
 					<div class="side-A">
@@ -95,23 +43,13 @@
 						<div class="product-desc-side">
 							<p class="name"><a href="{{url('product-detail', $value['id'])}}"><b>{{$value['name']}}</b></a></p> <br>
 							@if($value['sale'] == '0')
-							<h4><p style="background-color: #ff4157; margin-top: 8px; border-radius: 30px; padding: 5px">
+							<h4><p style="background-color: #ff4157; margin-top: 35px; border-radius: 30px; padding: 5px">
 								Giá: <b>{{number_format($value['price'])}} Vnd
 								</p>
-							</h4> <br>  
-							@else
-							<h4><p style=" border-radius: 30px; padding: 5px; text-decoration: line-through;">
-								Giá: <b>{{number_format($value['price'])}} Vnd
-								</p>
-								<p style="background-color: #ff4157; border-radius: 30px; padding: 5px; margin-top: 5px;">
-								Giá Sale: <b>{{number_format($value['sale'])}} Vnd
-								</p>
-							</h4> <br> 
-							@endif
+							</h4> <br>
 							<p><li>Nơi Sản Xuất: {{$value['production']}}</li></p>
 							<?php 
 								$address = DB::table('customer')->where('id', $value['id_customer'])->first();
-
 							?>
 							<p><b><li>Địa Chỉ: {{$address->address}}</li></b></p>
 							<p><b><li>
@@ -123,9 +61,35 @@
 								Thời Gian Đăng: <br> Lúc {{$c}} Ngày {{$d}}
 							</li></b></p> <br>
 							<div class="links">
-								<a href="{{url('motel-detail', $value['id'])}}" style="border-radius: 30px">Chi Tiết</a>
-								<a href="" id="carts2"></i>Mua Ngay</a>
+								<a href="{{url('product-detail', $value['id'])}}" style="border-radius: 30px">Chi Tiết</a>
+								<a href="{{route('shoppingcart', [$value['id'], $value['name']])}}" id="carts2"></i>Mua Ngay</a>
 							</div>
+							@else
+							<h4><p style=" border-radius: 30px; padding: 5px; text-decoration: line-through;">
+								Giá: <b>{{number_format($value['price'])}} Vnd
+								</p>
+								<p style="background-color: #ff4157; border-radius: 30px; padding: 5px; margin-top: 5px;">
+								Giá Sale: <b>{{number_format($value['sale'])}} Vnd
+								</p>
+							</h4> <br> 
+							<p><li>Nơi Sản Xuất: {{$value['production']}}</li></p>
+							<?php 
+								$address = DB::table('customer')->where('id', $value['id_customer'])->first();
+							?>
+							<p><b><li>Địa Chỉ: {{$address->address}}</li></b></p>
+							<p><b><li>
+								<?php 
+								$date = date_create($value['created_at']);
+								$d = date_format($date, 'd-m-Y');
+								$c = date_format($date, 'H:i');
+								?>
+								Thời Gian Đăng: <br> Lúc {{$c}} Ngày {{$d}}
+							</li></b></p> <br>
+							<div class="links">
+								<a href="{{url('product-detail', $value['id'])}}" style="border-radius: 30px">Chi Tiết</a>
+								<a href="{{route('shoppingcart', [$value['id'], $value['name']])}}" id="carts2"></i>Mua Ngay</a>
+							</div>
+							@endif
 						</div>
 					</div>
 				</div>
@@ -139,5 +103,22 @@
 		</div>
 	</div>
 </section>
-<!--end-->
+<script>
+	$(document).ready(function(){
+
+		$("#search").on('keyup', function(){
+			var key = $(this).val();
+			$.ajax({
+				url: '{{route('search-product')}}',
+				type: 'get',
+				data: {'search': key},
+				success: function(data){
+					$('#show').html(data);
+					console.log(data)
+				}
+			});
+		});
+
+	});
+</script>
 @endsection

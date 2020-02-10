@@ -61,15 +61,6 @@
 		border-right: 1px solid #878181;
 		margin-top: 10px;
 	}
-
-	#carts2{
-		border: 1px #eeba8c solid;
-		padding: 10px;
-		padding-bottom: 10px;
-		background-color: darkorange;
-		color: white;
-		border-radius: 3px;
-	}
 	.te{
 		text-align: center;
 		color: #605F5F;
@@ -159,8 +150,7 @@
 						?>
 						<span>Loại Sản Phẩm: {{$typeproduct->name}}</span>
 						<span>Tên Shop: <a href="{{route('all-motel', $product_detail->id_customer)}}">{{$shop->name_channelsales}}</a></span> <br> <br>
-						<a href="" id="carts"><i class="fa fa-cart-plus fa-2x"></i>Thêm Vào Giỏ Hàng</a>
-						<a href="" id="carts2"></i>Mua Ngay</a>
+						<a href="{{route('shoppingcart', [$product_detail['id'], $product_detail['name']])}}" id="carts"><i class="fa fa-cart-plus fa-2x"></i>Thêm Vào Giỏ Hàng</a>
 						<br> <br>
 						<p>Thời Gian Đăng: {{$c}} Ngày {{$d}}</p>
 						

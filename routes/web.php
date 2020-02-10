@@ -136,7 +136,9 @@ Route::group(['prefix'=>''],function(){
 	]);
 });
 
+// client cart 
 Route::group(['prefix'=>''],function(){
+
 	Route::get('shopping-cart', [
 		'as'=>'get-shopping-cart',
 		'uses' =>'PageControllerShoppingCart@GetShoppingCart'
@@ -156,6 +158,38 @@ Route::group(['prefix'=>''],function(){
 		'as'=>'ordered-boardinghouse',
 		'uses' =>'PageControllerShoppingCart@GetOrderBoar'
 	]);
+
+	Route::get('shoppingcart/{id}/{name}', [
+		'as'=>'shoppingcart',
+		'uses'=> 'PageControllerShoppingCart@GetCartProduct'
+	]);
+
+	Route::get('remove-cart/{id}', [
+		'as' => 'remove-cart',
+		'uses' => 'PageControllerShoppingCart@RemoveCart'
+	]);
+
+	Route::get('update-cart/{id}/{qty}', [
+		'as' => 'update-cart',
+		'uses' => 'PageControllerShoppingCart@UpdateCart'
+	]);
+
+	Route::post('save-cart/{id}',[
+		'as'=>'save-cart',
+		'uses'=>'PageControllerShoppingCart@SaveCart'
+	]);
+
+	Route::get('clear-cart', [
+		'as'=>'clear-cart',
+		'uses'=>'PageControllerShoppingCart@ClearCart'
+	]);
+
+	Route::get('get-cart/{id}', [
+		'as'=>'get-cart',
+		'uses'=>'PageControllerProduct@GetCart'
+	]);
+
+
 });
 // sales channel
 Route::group(['prefix'=>''],function(){
@@ -316,6 +350,11 @@ Route::group(['prefix'=>''],function(){
 	Route::get('search-motel', [
 		'as' => 'search-motel',
 		'uses' => 'PageControllerSearch@SearchBoardingClient'
+	]);
+
+	Route::get('search-product', [
+		'as' => 'search-product',
+		'uses' => 'PageControllerSearch@SearchProductClient'
 	]);
 
 	Route::get('get-district', [

@@ -62,6 +62,7 @@ License URI: http://www.themevault.net/license/-->
     </div>
     <script>
         $("div.alert").delay(3000).slideUp();
+        
     </script>
 </body>
 </html>

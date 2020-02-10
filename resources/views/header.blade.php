@@ -56,7 +56,7 @@
                                             <li><a data-hover="Phòng Trọ"  href="{{route('motel-all')}}"><span>Phòng Trọ</span></a></li>
                                             <li><a data-hover="Nội Thất"  href="{{route('product')}}"><span>Nội Thất</span></a></li>
                                             <li><a data-hover="Liên Hệ" href="{{route('page-contact')}}"><span>Liên Hệ</span></a></li>
-                                            <li><a data-hover="Giỏ Hàng" href="{{route('get-shopping-cart')}}"><span>Giỏ Hàng (0)</span></a></li>
+                                            <li><a data-hover="Giỏ Hàng" href="{{route('get-shopping-cart')}}"><span>Giỏ Hàng ({{$cart}})</span></a></li>
                                         </ul>
 
                                     </div>
@@ -86,6 +86,10 @@
                                     <li>
                                         <a class="dropdown-item" href="{{route('ordered-boardinghouse',$customer['id'])}}">
                                             <button type="button" class="btn btn-success">Phòng Đã Đặt
+                                            </button>
+                                        </a>
+                                        <a class="dropdown-item" href="{{route('get-cart',$customer['id'])}}">
+                                            <button type="button" class="btn btn-success">Đơn Hàng
                                             </button>
                                         </a>
                                         <a  class="dropdown-item">

@@ -8,6 +8,7 @@ use App\Type_Product;
 use App\Image_Product;
 use App\Comment_Product;
 use App\Rep_Comment_Product;
+use App\Order_Product;
 use File;
 
 class PageControllerProduct extends Controller
@@ -16,8 +17,6 @@ class PageControllerProduct extends Controller
     {
         $product = Product::orderBy('created_at', 'desc')->paginate(4);
         $type = Type_Product::get();
-        
-
     	return view('PageProduct.GetProductAll', compact('product', 'type'));
     }
 
@@ -25,7 +24,8 @@ class PageControllerProduct extends Controller
     {
         $type = Type_Product::get();
         $product = Product::where('id_typeproduct', $id)->paginate(4);
-    	return view('PageProduct.GetProductType', compact('type', 'product'));
+        $typename = Type_Product::where('id', $id)->first();
+    	return view('PageProduct.GetProductType', compact('type', 'product', 'typename'));
     }
 
     public function GetProductFilter()
@@ -157,6 +157,12 @@ class PageControllerProduct extends Controller
         // print_r($product->toArray());
         // echo "</pre>";
         return redirect()->back()->with('thongbao', 'cập nhật sản phẩm thành công');
+    }
+
+    public function GetCart($id)
+    {
+        $order = Order_Product::where('id_customer', $id)->get();
+        return view('PageCart.GetOrderProduct', compact('order'));
     }
     
 }
